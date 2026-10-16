@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReLife - AI Emotional Support Assistant</title>
+    <meta name="description" content="Compassionate, private AI emotional support assistant for divorce recovery, emotional coping, and verified wellness guidance.">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ReLife Unified Auth & Role Client -->
+    <script src="authClient.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-navy': '#1a365d',
+                        'primary-dark': '#2c5282',
+                        'primary-light': '#e6f3ff',
+                        'accent-emerald': '#10b981',
+                        'accent-teal': '#14b8a6',
+                        'divorce-blue': '#2563EB',
+                        'divorce-indigo': '#6366F1',
+                        'divorce-pink': '#F472B6',
+                        'divorce-purple': '#8B5CF6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .chat-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .chat-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .typing-dot {
+            animation: typingBounce 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50/30 min-h-screen text-slate-800 flex flex-col font-sans">
+
+    <!-- Top Navigation -->
+    <nav class="bg-primary-navy shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <img src="Relife logo.png" alt="ReLife Logo" class="w-10 h-10 rounded-lg object-cover shadow-sm">
+                    <div>
+                        <a href="index.html" class="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+                            ReLife <span class="text-xs bg-accent-teal/20 text-accent-teal px-2 py-0.5 rounded-full border border-accent-teal/30">Support Assistant</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-200">
+                    <a href="dashboard.html" class="hover:text-white transition-colors flex items-center gap-1">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+                    </a>
+                    <a href="journal.html" class="hover:text-white transition-colors flex items-center gap-1">
+                        <i data-lucide="book-heart" class="w-4 h-4"></i> Journal & Trends
+                    </a>
+                    <a href="support-chat.html" class="text-white font-semibold flex items-center gap-1 border-b-2 border-accent-emerald pb-1">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-accent-emerald"></i> AI Support Chat
+                    </a>
+                    <a href="about.html" class="hover:text-white transition-colors">About</a>
+                    <a href="contact.html" class="hover:text-white transition-colors">Support</a>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <!-- SOS Helpline Quick Action -->
+                    <button onclick="openEmergencyModal()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all shadow flex items-center gap-1.5" title="Emergency & Crisis Support Helplines">
+                        <i data-lucide="phone-call" class="w-3.5 h-3.5"></i> <span class="hidden sm:inline">Crisis SOS</span>
+                    </button>
+
+                    <div class="flex items-center space-x-3 relife-auth-slot">
+                        <div id="authStatusIndicator" class="text-xs text-slate-300 hidden sm:flex items-center gap-1.5 bg-slate-800/60 px-3 py-1.5 rounded-full border border-slate-700">
+                            <span id="authDot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                            <span id="authStatusText">Checking auth...</span>
+                        </div>
+                        <button id="authBtn" onclick="handleAuthAction()" class="bg-accent-emerald hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium px-4 py-2 rounded-lg transition-all shadow hover:shadow-md flex items-center gap-1.5">
+                            <i data-lucide="key" class="w-4 h-4"></i> <span id="authBtnLabel">Set Token</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Medical & Non-Clinical Persistent Disclaimer Banner -->
+    <aside aria-label="Clinical Disclaimer" class="bg-amber-50 border-b border-amber-200 text-amber-900 px-4 py-2.5 text-xs sm:text-sm">
+        <div class="max-w-7xl mx-auto flex items-start gap-2.5">
+            <i data-lucide="shield-alert" class="w-4 h-4 sm:w-5 sm:h-5 text-amber-600 flex-shrink-0 mt-0.5"></i>
+            <div class="flex-1">
+                <span class="font-bold">Supportive Guidance Notice:</span>
+                ReLife AI Support Assistant is an empathetic conversational guide providing emotional coping strategies, grounding techniques, and verified wellness resources. 
+                <span class="font-semibold underline">It is not a licensed therapist, psychologist, medical doctor, or attorney, and does not provide medical diagnosis, clinical psychotherapy, or formal legal advice.</span>
+                If you are in immediate danger or severe distress, please connect with certified human professionals or emergency helplines.
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Chat Workspace -->
+    <main class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-6 flex-1 w-full flex flex-col min-h-0">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1 h-[calc(100vh-180px)] min-h-[580px] max-h-[860px]">
+            
+            <!-- Sidebar: Conversation History & Helplines (Hidden on small screens by default) -->
+            <aside id="chatSidebar" class="hidden lg:flex lg:col-span-1 bg-white rounded-2xl shadow-sm border border-slate-200 flex-col overflow-hidden">
+                <!-- Sidebar Header -->
+                <div class="p-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="message-square" class="w-4 h-4 text-primary-navy"></i>
+                        <h2 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Conversations</h2>
+                    </div>
+                    <button onclick="startNewSession()" id="newChatBtn" class="text-xs bg-primary-navy hover:bg-primary-dark text-white font-medium px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1 shadow-sm">
+                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> <span>New</span>
+                    </button>
+                </div>
+
+                <!-- Session List -->
+                <div id="sessionsListContainer" class="flex-1 overflow-y-auto p-2 space-y-1.5 chat-scroll text-sm" role="list" aria-label="Past conversations">
+                    <div id="sessionsLoading" class="text-xs text-slate-400 p-4 text-center">Loading past conversations...</div>
+                </div>
+
+                <!-- Verified Safety Card Pinned in Sidebar -->
+                <div class="p-3 border-t border-slate-100 bg-rose-50/60 text-xs">
+                    <div class="flex items-center gap-1.5 text-rose-800 font-bold mb-1">
+                        <i data-lucide="heart-handshake" class="w-3.5 h-3.5"></i>
+                        <span>Immediate Helplines</span>
+                    </div>
+                    <p class="text-rose-700/80 mb-2 leading-relaxed">Free, 24/7 confidential crisis support across India:</p>
+                    <div class="space-y-1">
+                        <a href="tel:14416" class="flex items-center justify-between p-1.5 bg-white rounded border border-rose-200 hover:border-rose-300 text-rose-900 font-medium transition-colors">
+                            <span>Tele-MANAS</span>
+                            <span class="font-mono text-rose-600 font-bold">14416</span>
+                        </a>
+                        <a href="tel:18005990019" class="flex items-center justify-between p-1.5 bg-white rounded border border-rose-200 hover:border-rose-300 text-rose-900 font-medium transition-colors">
+                            <span>KIRAN Helpline</span>
+                            <span class="font-mono text-rose-600 font-bold">1800-599-0019</span>
+                        </a>
+                        <a href="tel:112" class="flex items-center justify-between p-1.5 bg-white rounded border border-rose-200 hover:border-rose-300 text-rose-900 font-medium transition-colors">
+                            <span>Emergency Response</span>
+                            <span class="font-mono text-rose-600 font-bold">112</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Chat Window -->
+            <section class="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden relative" role="region" aria-label="Support Chat Window">
+                
+                <!-- Chat Window Header -->
+                <header class="p-3 sm:p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
+                    <div class="flex items-center gap-3">
+                        <!-- Mobile Sidebar Toggle -->
+                        <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-200 rounded-lg" aria-label="Toggle Conversations">
+                            <i data-lucide="menu" class="w-5 h-5"></i>
+                        </button>
+                        
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-sm flex-shrink-0">
+                            <i data-lucide="bot" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h1 class="text-sm sm:text-base font-bold text-slate-800">ReLife Emotional Support Assistant</h1>
+                                <span class="hidden sm:inline-block text-[11px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200">
+                                    AI Support Guide
+                                </span>
+                            </div>
+                            <p class="text-xs text-slate-500 flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
+                                Non-clinical empathetic active listener • Grounded with verified resources
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right Header Actions -->
+                    <div class="flex items-center gap-2">
+                        <!-- Dynamic Journal Privacy Status Indicator -->
+                        <span id="journalStatusPill" class="hidden sm:flex text-xs px-2.5 py-1 rounded-full border items-center gap-1 font-medium bg-slate-100 border-slate-200 text-slate-600">
+                            <i data-lucide="lock" class="w-3 h-3 text-slate-500"></i>
+                            <span>Journal Private</span>
+                        </span>
+                        
+                        <button onclick="startNewSession()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg border border-slate-200 transition-colors flex items-center gap-1" title="Start a fresh conversation">
+                            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                            <span class="hidden sm:inline">Reset</span>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Message Display Area -->
+                <div id="chatMessagesContainer" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 chat-scroll bg-gradient-to-b from-white to-slate-50/50" role="log" aria-live="polite">
+                    
+                    <!-- Empty State (Shown when no messages exist) -->
+                    <div id="emptyStateContainer" class="max-w-2xl mx-auto py-8 sm:py-12 text-center animate-fade-in">
+                        <div class="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 mx-auto flex items-center justify-center mb-4 border border-blue-100 shadow-sm">
+                            <i data-lucide="sparkles" class="w-8 h-8"></i>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-2">Welcome to ReLife Emotional Support</h2>
+                        <p class="text-sm text-slate-600 max-w-lg mx-auto mb-6 leading-relaxed">
+                            A compassionate, private space to process difficult emotions, learn evidence-based coping techniques, and explore verified separation and mediation guidance.
+                        </p>
+
+                        <!-- Non-Clinical Role Notice Badge -->
+                        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-800 text-xs px-3.5 py-1.5 rounded-full border border-blue-200 mb-8 font-medium">
+                            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                            <span>General supportive information only • Not a replacement for a licensed therapist or lawyer</span>
+                        </div>
+
+                        <!-- Suggested Prompt Pills -->
+                        <div class="text-left">
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 text-center">Suggested topics to explore:</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-xl mx-auto">
+                                <button onclick="handleSuggestedPrompt('How do I navigate grief and heartbreak after divorce?')" class="text-left p-3 rounded-xl border border-slate-200 hover:border-blue-400 bg-white hover:bg-blue-50/40 text-xs text-slate-700 transition-all flex items-start gap-2 shadow-xs group">
+                                    <i data-lucide="heart" class="w-4 h-4 text-rose-500 mt-0.5 group-hover:scale-110 transition-transform"></i>
+                                    <span>Coping with grief, sadness, and heartbreak after divorce</span>
+                                </button>
+                                <button onclick="handleSuggestedPrompt('What grounding exercises help during acute panic or anxiety?')" class="text-left p-3 rounded-xl border border-slate-200 hover:border-blue-400 bg-white hover:bg-blue-50/40 text-xs text-slate-700 transition-all flex items-start gap-2 shadow-xs group">
+                                    <i data-lucide="wind" class="w-4 h-4 text-teal-500 mt-0.5 group-hover:scale-110 transition-transform"></i>
+                                    <span>Grounding techniques for acute panic and emotional overwhelm</span>
+                                </button>
+                                <button onclick="handleSuggestedPrompt('How can we create a healthy co-parenting schedule and protect our children?')" class="text-left p-3 rounded-xl border border-slate-200 hover:border-blue-400 bg-white hover:bg-blue-50/40 text-xs text-slate-700 transition-all flex items-start gap-2 shadow-xs group">
+                                    <i data-lucide="users" class="w-4 h-4 text-indigo-500 mt-0.5 group-hover:scale-110 transition-transform"></i>
+                                    <span>Co-parenting boundaries and shielding children from conflict</span>
+                                </button>
+                                <button onclick="handleSuggestedPrompt('Where can I find free legal aid or Lok Adalat mediation in India?')" class="text-left p-3 rounded-xl border border-slate-200 hover:border-blue-400 bg-white hover:bg-blue-50/40 text-xs text-slate-700 transition-all flex items-start gap-2 shadow-xs group">
+                                    <i data-lucide="scale" class="w-4 h-4 text-blue-600 mt-0.5 group-hover:scale-110 transition-transform"></i>
+                                    <span>Free legal aid & pre-litigation mediation options in India</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Message List -->
+                    <div id="messagesList" class="space-y-4"></div>
+
+                    <!-- Typing Indicator (Initially Hidden) -->
+                    <div id="typingIndicator" class="hidden flex items-start gap-3 animate-fade-in" aria-live="polite">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 text-xs font-bold">
+                            <i data-lucide="bot" class="w-4 h-4"></i>
+                        </div>
+                        <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-sm p-3.5 shadow-xs text-xs text-slate-500 flex items-center gap-2">
+                            <span>Assistant is reflecting</span>
+                            <div class="flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-500 typing-dot"></span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-500 typing-dot"></span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-500 typing-dot"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Network Error State with Retry Button (Dynamically shown) -->
+                    <div id="networkErrorBanner" class="hidden p-4 rounded-xl bg-red-50 border border-red-200 text-red-900 text-xs sm:text-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-fade-in" role="alert">
+                        <div class="flex items-center gap-2.5">
+                            <i data-lucide="wifi-off" class="w-5 h-5 text-red-600 flex-shrink-0"></i>
+                            <div>
+                                <span class="font-bold">Connection Issue:</span>
+                                <span id="networkErrorMessage">Unable to reach the assistant. Please check your network connection.</span>
+                            </div>
+                        </div>
+                        <button onclick="retryLastMessage()" id="retryBtn" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition-all shadow-xs flex-shrink-0">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            <span>Retry Message</span>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Chat Input Controls -->
+                <footer class="p-3 sm:p-4 border-t border-slate-100 bg-white" id="chatInputSection">
+                    
+                    <!-- Privacy Opt-In Control & Notification -->
+                    <div class="mb-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-1">
+                        <label class="inline-flex items-center gap-2 cursor-pointer text-xs text-slate-600 select-none">
+                            <input type="checkbox" id="journalContextToggle" onchange="handleJournalToggleChange(this)" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
+                            <span class="font-medium text-slate-700">Allow assistant to reference my recent mood & journal reflections</span>
+                        </label>
+                        <span class="text-[11px] text-slate-400 flex items-center gap-1" title="Your journal entries are private by default.">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-500"></i>
+                            <span>Private by default • Opt-in only</span>
+                        </span>
+                    </div>
+
+                    <!-- Input Box & Action Buttons -->
+                    <form onsubmit="handleChatSubmit(event)" class="relative flex items-end gap-2">
+                        <div class="relative flex-1">
+                            <textarea 
+                                id="chatInput" 
+                                rows="2" 
+                                maxlength="2000"
+                                oninput="handleInputResize(this)"
+                                onkeydown="handleKeyDown(event)"
+                                placeholder="Share how you're feeling, ask about coping practices, or explore mediation options..." 
+                                class="w-full pl-3.5 pr-14 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none leading-relaxed text-slate-800 transition-all chat-scroll"
+                                aria-label="Type your message to the support assistant"
+                            ></textarea>
+                            <div class="absolute right-3 bottom-2.5 text-[10px] text-slate-400 font-mono" id="charCounter">
+                                0 / 2000
+                            </div>
+                        </div>
+
+                        <button 
+                            type="submit" 
+                            id="sendBtn" 
+                            class="h-11 px-4 bg-primary-navy hover:bg-primary-dark disabled:bg-slate-300 text-white font-medium rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm disabled:cursor-not-allowed flex-shrink-0"
+                            aria-label="Send message"
+                        >
+                            <span class="hidden sm:inline text-xs font-semibold">Send</span>
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                    <p class="text-[11px] text-slate-400 mt-2 text-center">
+                        Press <kbd class="px-1.5 py-0.5 bg-slate-100 rounded border border-slate-200 text-slate-600 font-mono text-[10px]">Enter</kbd> to send, <kbd class="px-1.5 py-0.5 bg-slate-100 rounded border border-slate-200 text-slate-600 font-mono text-[10px]">Shift + Enter</kbd> for a new line.
+                    </p>
+                </footer>
+
+            </section>
+        </div>
+    </main>
+
+    <!-- Emergency Crisis Helplines Modal -->
+    <div id="emergencyModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="emergencyModalTitle">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-rose-100 animate-fade-in">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-2.5 text-rose-700">
+                    <div class="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center">
+                        <i data-lucide="life-buoy" class="w-5 h-5 text-rose-600"></i>
+                    </div>
+                    <div>
+                        <h3 id="emergencyModalTitle" class="text-lg font-bold text-slate-900">Immediate Support & Helplines</h3>
+                        <p class="text-xs text-slate-500">Free, confidential 24/7 crisis resources</p>
+                    </div>
+                </div>
+                <button onclick="closeEmergencyModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg" aria-label="Close modal">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                If you are experiencing thoughts of self-harm, severe distress, or immediate danger, please connect directly with trained human counselors right now:
+            </p>
+
+            <div class="space-y-2 mb-5">
+                <div class="p-3 rounded-xl bg-rose-50/80 border border-rose-200 flex items-center justify-between">
+                    <div>
+                        <div class="font-bold text-xs text-rose-950">Tele-MANAS (India MoHFW)</div>
+                        <div class="text-[11px] text-rose-700">Toll-free tele-counseling in 20+ languages</div>
+                    </div>
+                    <a href="tel:14416" class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                        <i data-lucide="phone" class="w-3 h-3"></i> 14416
+                    </a>
+                </div>
+
+                <div class="p-3 rounded-xl bg-rose-50/80 border border-rose-200 flex items-center justify-between">
+                    <div>
+                        <div class="font-bold text-xs text-rose-950">KIRAN Mental Health (India)</div>
+                        <div class="text-[11px] text-rose-700">24/7 Psychological first aid & distress relief</div>
+                    </div>
+                    <a href="tel:18005990019" class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                        <i data-lucide="phone" class="w-3 h-3"></i> 1800-599-0019
+                    </a>
+                </div>
+
+                <div class="p-3 rounded-xl bg-rose-50/80 border border-rose-200 flex items-center justify-between">
+                    <div>
+                        <div class="font-bold text-xs text-rose-950">Pan-India Emergency Response</div>
+                        <div class="text-[11px] text-rose-700">Unified police, medical, and fire emergency</div>
+                    </div>
+                    <a href="tel:112" class="bg-slate-900 hover:bg-black text-white font-bold text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                        <i data-lucide="phone" class="w-3 h-3"></i> 112
+                    </a>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                    <div class="font-bold text-slate-800 mb-1">International Helplines</div>
+                    <div class="text-slate-600 text-[11px] space-y-0.5">
+                        <p>• <strong>USA / Canada:</strong> Call or text <span class="font-mono font-bold text-blue-700">988</span></p>
+                        <p>• <strong>United Kingdom:</strong> Samaritans <span class="font-mono font-bold text-blue-700">116 123</span> or NHS <span class="font-mono font-bold text-blue-700">111</span></p>
+                        <p>• <strong>Australia:</strong> Lifeline <span class="font-mono font-bold text-blue-700">13 11 14</span></p>
+                        <p>• <strong>Global Directory:</strong> <a href="https://findahelpline.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline font-semibold">findahelpline.com</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="closeEmergencyModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 rounded-xl text-xs transition-colors">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Auth Token Modal (Matching journal.html pattern for testability) -->
+    <div id="authModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-fade-in">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i data-lucide="key" class="w-5 h-5 text-accent-emerald"></i>
+                    Authentication Token
+                </h3>
+                <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                ReLife protects your conversations with authenticated JSON Web Tokens (JWT). Paste a valid user token below or sign in through the login portal.
+            </p>
+            <div class="mb-4">
+                <label for="authTokenInput" class="block text-xs font-semibold text-slate-700 mb-1">Bearer Token (JWT)</label>
+                <textarea id="authTokenInput" rows="3" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." class="w-full p-2.5 text-xs font-mono bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-accent-emerald focus:outline-none"></textarea>
+            </div>
+            <div class="flex items-center justify-end gap-2">
+                <button onclick="closeAuthModal()" class="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
+                <button onclick="saveAuthToken()" class="px-4 py-2 text-xs font-medium text-white bg-accent-emerald hover:bg-emerald-600 rounded-lg shadow">Save Token</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- Core Interactive Client Script -->
+    <script>
+        // State variables
+        let currentSessionId = null;
+        let pastSessions = [];
+        let isWaitingForResponse = false;
+        let lastFailedMessagePayload = null;
+
+        // Initialize on DOM Ready
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            checkAuthStatus();
+            loadSessionsList();
+        });
+
+        // ====================================================================
+        // Authentication Management
+        // ====================================================================
+        function getAuthToken() {
+            return localStorage.getItem('authToken') || localStorage.getItem('token') || '';
+        }
+
+        function checkAuthStatus() {
+            const token = getAuthToken();
+            const dot = document.getElementById('authDot');
+            const statusText = document.getElementById('authStatusText');
+            const authBtnLabel = document.getElementById('authBtnLabel');
+            const user = window.AuthClient ? window.AuthClient.getUser() : null;
+
+            if (token) {
+                if (dot) dot.className = 'w-2 h-2 rounded-full bg-emerald-400';
+                if (statusText) statusText.textContent = user?.name ? `${user.name} (${(user.role || 'Member').toUpperCase()})` : 'Authenticated';
+                if (authBtnLabel) authBtnLabel.textContent = user ? (user.name.split(' ')[0] || 'Account') : 'Token Set';
+            } else {
+                if (dot) dot.className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
+                if (statusText) statusText.textContent = 'No Token';
+                if (authBtnLabel) authBtnLabel.textContent = 'Sign In';
+            }
+        }
+
+        function handleAuthAction() {
+            if (window.AuthClient) {
+                window.AuthClient.openModal('personas');
+                return;
+            }
+            document.getElementById('authTokenInput').value = getAuthToken();
+            document.getElementById('authModal').classList.remove('hidden');
+        }
+
+        window.onAuthSuccess = function() {
+            checkAuthStatus();
+            loadSessionsList();
+        };
+
+        window.addEventListener('relife:authChange', () => {
+            checkAuthStatus();
+            loadSessionsList();
+        });
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function saveAuthToken() {
+            const tokenVal = document.getElementById('authTokenInput').value.trim();
+            if (tokenVal) {
+                if (window.AuthClient) {
+                    window.AuthClient.setSession(tokenVal);
+                } else {
+                    localStorage.setItem('authToken', tokenVal);
+                }
+            } else {
+                if (window.AuthClient) {
+                    window.AuthClient.clearSession();
+                } else {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('token');
+                }
+            }
+            closeAuthModal();
+            checkAuthStatus();
+            showToast('Authentication token updated.', 'success');
+            loadSessionsList();
+        }
+
+        // ====================================================================
+        // Privacy Toggle Handling
+        // ====================================================================
+        function handleJournalToggleChange(checkbox) {
+            const statusPill = document.getElementById('journalStatusPill');
+            if (checkbox.checked) {
+                statusPill.className = 'hidden sm:flex text-xs px-2.5 py-1 rounded-full border items-center gap-1 font-medium bg-blue-50 border-blue-200 text-blue-700';
+                statusPill.innerHTML = '<i data-lucide="book-open" class="w-3 h-3 text-blue-600"></i><span>Journal Context On</span>';
+                showToast('Journal context enabled for next message. Reflections will be shared with assistant.', 'info');
+            } else {
+                statusPill.className = 'hidden sm:flex text-xs px-2.5 py-1 rounded-full border items-center gap-1 font-medium bg-slate-100 border-slate-200 text-slate-600';
+                statusPill.innerHTML = '<i data-lucide="lock" class="w-3 h-3 text-slate-500"></i><span>Journal Private</span>';
+                showToast('Journal entries kept strictly private (not shared).', 'info');
+            }
+            lucide.createIcons();
+        }
+
+        // ====================================================================
+        // Input Handling & Resizing
+        // ====================================================================
+        function handleInputResize(textarea) {
+            textarea.style.height = 'auto';
+            const newHeight = Math.min(textarea.scrollHeight, 140);
+            textarea.style.height = `${newHeight}px`;
+
+            const charCounter = document.getElementById('charCounter');
+            charCounter.textContent = `${textarea.value.length} / 2000`;
+            if (textarea.value.length > 1900) {
+                charCounter.classList.add('text-amber-500');
+            } else {
+                charCounter.classList.remove('text-amber-500');
+            }
+        }
+
+        function handleKeyDown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                handleChatSubmit(event);
+            }
+        }
+
+        function handleSuggestedPrompt(promptText) {
+            const input = document.getElementById('chatInput');
+            input.value = promptText;
+            handleInputResize(input);
+            sendMessage(promptText);
+        }
+
+        // ====================================================================
+        // Sessions Management
+        // ====================================================================
+        async function loadSessionsList() {
+            const token = getAuthToken();
+            const container = document.getElementById('sessionsListContainer');
+            if (!token) {
+                container.innerHTML = '<div class="text-xs text-slate-400 p-4 text-center">Set your authentication token to load previous conversations.</div>';
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/chatbot/sessions', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) {
+                    throw new Error(`Failed to load sessions (${res.status})`);
+                }
+
+                const data = await res.json();
+                pastSessions = data.sessions || [];
+                renderSessionsList();
+            } catch (err) {
+                console.warn('Error loading sessions:', err.message);
+                container.innerHTML = '<div class="text-xs text-slate-400 p-4 text-center">Unable to load past conversations.</div>';
+            }
+        }
+
+        function renderSessionsList() {
+            const container = document.getElementById('sessionsListContainer');
+            if (pastSessions.length === 0) {
+                container.innerHTML = '<div class="text-xs text-slate-400 p-4 text-center">No past conversations yet. Start a new chat!</div>';
+                return;
+            }
+
+            container.innerHTML = pastSessions.map(s => {
+                const isActive = s.sessionId === currentSessionId;
+                const dateStr = s.createdAt ? new Date(s.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : '';
+                const snippet = s.lastMessage ? escapeHtml(s.lastMessage.substring(0, 36)) + '...' : 'Conversation ' + s.sessionId.substring(0, 6);
+
+                return `
+                    <div class="group flex items-center justify-between p-2 rounded-xl cursor-pointer transition-colors ${isActive ? 'bg-blue-50 border border-blue-200 text-blue-900 font-medium' : 'hover:bg-slate-100 text-slate-700'}" onclick="selectSession('${s.sessionId}')">
+                        <div class="flex-1 min-w-0 pr-2">
+                            <p class="text-xs truncate">${snippet}</p>
+                            <span class="text-[10px] text-slate-400">${dateStr}</span>
+                        </div>
+                        <button onclick="deleteSession(event, '${s.sessionId}')" class="opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-red-600 rounded transition-opacity" title="Delete conversation">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        function startNewSession() {
+            currentSessionId = null;
+            document.getElementById('messagesList').innerHTML = '';
+            document.getElementById('emptyStateContainer').classList.remove('hidden');
+            hideNetworkError();
+            renderSessionsList();
+            const input = document.getElementById('chatInput');
+            input.value = '';
+            input.focus();
+            showToast('Started a new conversation.', 'info');
+        }
+
+        async function selectSession(sessionId) {
+            if (currentSessionId === sessionId) return;
+            currentSessionId = sessionId;
+            renderSessionsList();
+            hideNetworkError();
+
+            const token = getAuthToken();
+            if (!token) return;
+
+            try {
+                const res = await fetch(`/api/chatbot/history?sessionId=${sessionId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) throw new Error('Failed to load session history');
+
+                const data = await res.json();
+                const history = data.history || [];
+
+                document.getElementById('emptyStateContainer').classList.add('hidden');
+                const messagesList = document.getElementById('messagesList');
+                messagesList.innerHTML = '';
+
+                history.forEach(item => {
+                    if (item.sender === 'user') {
+                        appendUserBubble(item.message, item.timestamp);
+                    } else {
+                        appendAssistantBubble({
+                            response: item.message,
+                            citations: item.citations || [],
+                            escalated: item.escalated || false,
+                            timestamp: item.timestamp
+                        });
+                    }
+                });
+
+                scrollToBottom();
+            } catch (err) {
+                console.error('Error fetching session history:', err);
+                showToast('Could not load chat history.', 'error');
+            }
+        }
+
+        async function deleteSession(event, sessionId) {
+            event.stopPropagation();
+            if (!confirm('Are you sure you want to delete this conversation? This action cannot be undone.')) {
+                return;
+            }
+
+            const token = getAuthToken();
+            try {
+                const res = await fetch(`/api/chatbot/history/${sessionId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) throw new Error('Failed to delete conversation');
+
+                showToast('Conversation deleted.', 'success');
+                if (currentSessionId === sessionId) {
+                    startNewSession();
+                }
+                loadSessionsList();
+            } catch (err) {
+                console.error('Error deleting session:', err);
+                showToast('Unable to delete session.', 'error');
+            }
+        }
+
+        // ====================================================================
+        // Chat Messaging & API Interaction
+        // ====================================================================
+        function handleChatSubmit(event) {
+            if (event) event.preventDefault();
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message || isWaitingForResponse) return;
+            input.value = '';
+            handleInputResize(input);
+            sendMessage(message);
+        }
+
+        async function sendMessage(messageText) {
+            const token = getAuthToken();
+            if (!token) {
+                showToast('Please set your authentication token first.', 'warning');
+                handleAuthAction();
+                return;
+            }
+
+            // Hide empty state once conversation starts
+            document.getElementById('emptyStateContainer').classList.add('hidden');
+            hideNetworkError();
+
+            // Append user message bubble to view
+            appendUserBubble(messageText, new Date());
+            scrollToBottom();
+
+            // Prepare payload
+            const includeJournal = Boolean(document.getElementById('journalContextToggle').checked);
+            const payload = {
+                message: messageText,
+                sessionId: currentSessionId || undefined,
+                includeJournalContext: includeJournal
+            };
+
+            lastFailedMessagePayload = payload;
+            setWaitingState(true);
+
+            try {
+                const res = await fetch('/api/chatbot/message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    const errorData = await res.json().catch(() => ({}));
+                    throw new Error(errorData.message || `Request failed with status ${res.status}`);
+                }
+
+                const data = await res.json();
+
+                // Update session state
+                if (data.sessionId) {
+                    currentSessionId = data.sessionId;
+                }
+
+                // Append assistant bubble
+                appendAssistantBubble({
+                    response: data.response,
+                    citations: data.citations || [],
+                    escalated: data.escalated || false,
+                    disclaimer: data.disclaimer,
+                    timestamp: new Date()
+                });
+
+                lastFailedMessagePayload = null;
+                loadSessionsList(); // Refresh session drawer in background
+            } catch (err) {
+                console.error('[Chat Interface] Message delivery failed:', err);
+                showNetworkError(err.message || 'Unable to connect to the assistant server.');
+            } finally {
+                setWaitingState(false);
+                scrollToBottom();
+            }
+        }
+
+        function retryLastMessage() {
+            if (!lastFailedMessagePayload) return;
+            hideNetworkError();
+            sendMessage(lastFailedMessagePayload.message);
+        }
+
+        function setWaitingState(isWaiting) {
+            isWaitingForResponse = isWaiting;
+            const typingIndicator = document.getElementById('typingIndicator');
+            const sendBtn = document.getElementById('sendBtn');
+            const input = document.getElementById('chatInput');
+
+            if (isWaiting) {
+                typingIndicator.classList.remove('hidden');
+                sendBtn.disabled = true;
+                input.disabled = true;
+            } else {
+                typingIndicator.classList.add('hidden');
+                sendBtn.disabled = false;
+                input.disabled = false;
+                input.focus();
+            }
+        }
+
+        function showNetworkError(message) {
+            const banner = document.getElementById('networkErrorBanner');
+            const msgEl = document.getElementById('networkErrorMessage');
+            msgEl.textContent = message;
+            banner.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function hideNetworkError() {
+            document.getElementById('networkErrorBanner').classList.add('hidden');
+        }
+
+        // ====================================================================
+        // Message Rendering Components
+        // ====================================================================
+        function appendUserBubble(message, timestamp) {
+            const messagesList = document.getElementById('messagesList');
+            const timeStr = formatTime(timestamp);
+
+            const bubbleHtml = `
+                <div class="flex justify-end animate-fade-in">
+                    <div class="max-w-[85%] sm:max-w-[75%] space-y-1">
+                        <div class="bg-primary-navy text-white text-xs sm:text-sm p-3.5 rounded-2xl rounded-tr-xs shadow-sm leading-relaxed whitespace-pre-wrap select-text">
+                            ${escapeHtml(message)}
+                        </div>
+                        <div class="text-[10px] text-slate-400 text-right pr-1">${timeStr}</div>
+                    </div>
+                </div>
+            `;
+
+            messagesList.insertAdjacentHTML('beforeend', bubbleHtml);
+        }
+
+        function appendAssistantBubble({ response, citations = [], escalated = false, disclaimer, timestamp }) {
+            const messagesList = document.getElementById('messagesList');
+            const timeStr = formatTime(timestamp);
+
+            // 1. Serious-Distress Escalation Response Card
+            let escalationHtml = '';
+            if (escalated) {
+                escalationHtml = `
+                    <div class="mt-3.5 p-4 rounded-xl bg-rose-50 border-2 border-rose-200 text-rose-950 space-y-3" role="alert" aria-label="Emergency Crisis Escalation">
+                        <div class="flex items-center gap-2 font-bold text-xs sm:text-sm text-rose-900">
+                            <i data-lucide="shield-alert" class="w-4 h-4 text-rose-600"></i>
+                            <span>Immediate Crisis Support & Safety Resources</span>
+                        </div>
+                        <p class="text-xs text-rose-800 leading-relaxed">
+                            We hear how heavy this feels. Your safety and wellbeing matter deeply. Please reach out to one of these free, confidential professional helplines immediately:
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                            <a href="tel:14416" class="p-2.5 bg-white rounded-lg border border-rose-200 hover:border-rose-300 font-semibold text-rose-900 flex items-center justify-between shadow-xs">
+                                <span>Tele-MANAS</span>
+                                <span class="text-rose-600">14416</span>
+                            </a>
+                            <a href="tel:18005990019" class="p-2.5 bg-white rounded-lg border border-rose-200 hover:border-rose-300 font-semibold text-rose-900 flex items-center justify-between shadow-xs">
+                                <span>KIRAN</span>
+                                <span class="text-rose-600">1800-599-0019</span>
+                            </a>
+                            <a href="tel:112" class="p-2.5 bg-slate-900 rounded-lg text-white font-semibold flex items-center justify-between shadow-xs hover:bg-black">
+                                <span>Emergency</span>
+                                <span class="text-rose-300">112</span>
+                            </a>
+                        </div>
+                        <div class="text-[11px] text-rose-700 flex items-center justify-between pt-1">
+                            <span>International directory: <a href="https://findahelpline.com/" target="_blank" rel="noopener noreferrer" class="underline font-bold">findahelpline.com</a></span>
+                            <button onclick="openEmergencyModal()" class="underline font-bold text-rose-900 hover:text-rose-950">View all helplines →</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // 2. Verified Resource Citations Section
+            let citationsHtml = '';
+            if (citations && citations.length > 0) {
+                const citationItems = citations.map(c => `
+                    <li class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-blue-300 transition-colors">
+                        <a href="${escapeHtml(c.url)}" target="_blank" rel="noopener noreferrer" class="font-medium text-blue-700 hover:text-blue-900 underline text-xs flex items-center gap-1.5 mb-0.5">
+                            <span>${escapeHtml(c.title)}</span>
+                            <i data-lucide="external-link" class="w-3 h-3 text-blue-500 flex-shrink-0"></i>
+                        </a>
+                        <div class="text-[10px] text-slate-500 flex flex-wrap items-center gap-x-2">
+                            <span><strong>Publisher:</strong> ${escapeHtml(c.publisher)}</span>
+                            ${c.reviewDate ? `<span>• <strong>Reviewed:</strong> ${escapeHtml(c.reviewDate)}</span>` : ''}
+                        </div>
+                    </li>
+                `).join('');
+
+                citationsHtml = `
+                    <div class="mt-3.5 pt-3 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 text-xs font-bold text-slate-700 mb-2">
+                            <i data-lucide="bookmark-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+                            <span>Verified Supporting Resources & Citations:</span>
+                        </div>
+                        <ul class="space-y-1.5 text-xs">
+                            ${citationItems}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            const assistantBubbleHtml = `
+                <div class="flex items-start gap-3 animate-fade-in">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 text-xs font-bold shadow-xs">
+                        <i data-lucide="bot" class="w-4 h-4"></i>
+                    </div>
+                    <div class="max-w-[85%] sm:max-w-[80%] space-y-1">
+                        <div class="bg-white border border-slate-200 text-slate-800 text-xs sm:text-sm p-4 rounded-2xl rounded-tl-xs shadow-xs leading-relaxed">
+                            <div class="whitespace-pre-wrap select-text">${escapeHtml(response)}</div>
+                            ${escalationHtml}
+                            ${citationsHtml}
+                            <div class="mt-3 pt-2 text-[10px] text-slate-400 border-t border-slate-100 flex items-center justify-between">
+                                <span>Supportive AI guide • Non-clinical</span>
+                                <span>${timeStr}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            messagesList.insertAdjacentHTML('beforeend', assistantBubbleHtml);
+            lucide.createIcons();
+        }
+
+        // ====================================================================
+        // Utilities & Modals
+        // ====================================================================
+        function scrollToBottom() {
+            const container = document.getElementById('chatMessagesContainer');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function formatTime(timestamp) {
+            try {
+                return new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } catch {
+                return '';
+            }
+        }
+
+        function escapeHtml(text) {
+            if (!text || typeof text !== 'string') return '';
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('chatSidebar');
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('fixed');
+            sidebar.classList.toggle('inset-0');
+            sidebar.classList.toggle('z-50');
+            sidebar.classList.toggle('m-4');
+        }
+
+        function openEmergencyModal() {
+            document.getElementById('emergencyModal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeEmergencyModal() {
+            document.getElementById('emergencyModal').classList.add('hidden');
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+
+            let bg = 'bg-slate-800 text-white';
+            let icon = 'info';
+            if (type === 'success') { bg = 'bg-emerald-600 text-white'; icon = 'check-circle'; }
+            if (type === 'error') { bg = 'bg-rose-600 text-white'; icon = 'alert-triangle'; }
+            if (type === 'warning') { bg = 'bg-amber-600 text-white'; icon = 'alert-circle'; }
+
+            toast.className = `${bg} px-4 py-2.5 rounded-xl shadow-lg text-xs flex items-center gap-2 pointer-events-auto transition-all transform translate-y-2 opacity-0`;
+            toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4"></i><span>${escapeHtml(message)}</span>`;
+
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>

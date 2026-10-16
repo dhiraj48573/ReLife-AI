@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - ReLife Support Platform</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-navy': '#1a365d',
+                        'primary-dark': '#2c5282',
+                        'primary-light': '#e6f3ff',
+                        'accent-emerald': '#10b981',
+                        'accent-teal': '#14b8a6',
+                        'neutral-gray': '#64748b',
+                        'neutral-light': '#f8fafc',
+                        'neutral-dark': '#1e293b',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-in': 'slideIn 0.5s ease-out',
+                        'bounce-in': 'bounceIn 0.6s ease-out',
+                        'scale-in': 'scaleIn 0.3s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'gradient-shift': 'gradientShift 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        gradientShift: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #10b981 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .gradient-border {
+            background: linear-gradient(45deg, #1a365d, #10b981, #14b8a6, #2c5282);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-neutral-light">
+    <!-- Navigation -->
+    <nav class="bg-primary-dark/95 backdrop-blur-md shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-2">
+                        <img src="Relife logo.png" alt="ReLife Logo" class="w-14 h-14 rounded-lg object-cover">
+                        <h1 class="text-2xl font-bold text-white text-shadow ml-3">ReLife</h1>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-1 hover:bg-white/10">
+                        <i data-lucide="home" class="w-4 h-4"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="index.html#features" class="text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-1 hover:bg-white/10">
+                        <i data-lucide="star" class="w-4 h-4"></i>
+                        <span>Features</span>
+                    </a>
+                    <a href="about.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-1 hover:bg-white/10">
+                        <i data-lucide="users" class="w-4 h-4"></i>
+                        <span>About</span>
+                    </a>
+                    <a href="contact.html" class="text-white font-medium flex items-center space-x-1">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        <span>Contact</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.location.href='index.html'" class="bg-accent-emerald text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-accent-teal transition-colors">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-20 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold mb-6 animate-fade-in">Contact ReLife</h1>
+                <p class="text-xl text-blue-100 max-w-3xl mx-auto animate-slide-in">
+                    We're here to help. Reach out to our team for support, guidance, or more information.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-primary-dark mb-4">Get in Touch</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Have questions? Need support? We're here to help 24/7. Choose the best way to reach us below.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="animate-slide-in">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                        <h3 class="text-2xl font-semibold text-primary-dark mb-6">Send us a Message</h3>
+                        <form class="space-y-6" onsubmit="handleContactSubmit(event)">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-emerald focus:border-transparent" placeholder="John">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-emerald focus:border-transparent" placeholder="Doe">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-emerald focus:border-transparent" placeholder="john.doe@example.com">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-emerald focus:border-transparent" placeholder="+1 (555) 123-4567">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                                <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-emerald focus:border-transparent">
+                                    <option value="">Select a subject</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="support">Support Request</option>
+                                    <option value="technical">Technical Support</option>
+                                    <option value="partnership">Partnership Opportunity</option>
+                                    <option value="feedback">Feedback</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                <textarea required rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-emerald focus:border-transparent" placeholder="How can we help you today?"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-accent-emerald hover:bg-accent-teal text-white px-6 py-3 rounded-lg transition-colors font-medium">
+                                <i data-lucide="send" class="w-5 h-5 inline mr-2"></i>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="animate-slide-in" style="animation-delay: 0.2s">
+                    <div class="bg-gradient-to-br from-primary-light to-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                        <h3 class="text-2xl font-semibold text-primary-dark mb-6">Contact Information</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-accent-emerald rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="mail" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-primary-dark mb-1">Email Support</h4>
+                                    <p class="text-gray-600">support@relife.com</p>
+                                    <p class="text-sm text-gray-500">Response within 24 hours</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-primary-navy rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="phone" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-primary-dark mb-1">Phone Support</h4>
+                                    <p class="text-gray-600">+91 9259534648</p>
+                                    <p class="text-sm text-gray-500">Mon-Fri, 9AM-6PM EST</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-accent-teal rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="message-circle" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-primary-dark mb-1">Live Chat</h4>
+                                    <p class="text-gray-600">Available 24/7</p>
+                                    <button onclick="startLiveChat()" class="text-accent-emerald hover:text-accent-teal font-medium transition-colors">
+                                        Start Chat
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-primary-dark mb-1">Office Location</h4>
+                                    <p class="text-gray-600">Jurs country</p>
+                                    <p class="text-gray-600">Haridwar, Uttarakhand</p>
+                                    <p class="text-sm text-gray-500">By appointment only</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Emergency Contact -->
+                        <div class="mt-8 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600"></i>
+                                <div>
+                                    <h4 class="font-semibold text-red-800 mb-1">Emergency Support</h4>
+                                    <p class="text-red-700">For immediate crisis support, call our 24/7 hotline</p>
+                                    <p class="text-red-600 font-bold">+91 9259534648</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-neutral-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-primary-dark mb-4">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Quick answers to common questions about our services and support.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-3">How do I get started?</h3>
+                    <p class="text-gray-600 text-sm mb-4">
+                        Simply click "Get Started" on our homepage or sign up for a free account to access our support groups and resources.
+                    </p>
+                    <a href="index.html" class="text-accent-emerald hover:text-accent-teal font-medium text-sm">
+                        Learn More →
+                    </a>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-3">What services do you offer?</h3>
+                    <p class="text-gray-600 text-sm mb-4">
+                        We offer support groups, one-on-one counseling, legal guidance, educational resources, and premium membership options.
+                    </p>
+                    <a href="about.html" class="text-accent-emerald hover:text-accent-teal font-medium text-sm">
+                        View All Services →
+                    </a>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-3">Is my information confidential?</h3>
+                    <p class="text-gray-600 text-sm mb-4">
+                        Yes, absolutely. All communications are encrypted and completely confidential, following HIPAA compliance standards.
+                    </p>
+                    <a href="privacy-policy.html" class="text-accent-emerald hover:text-accent-teal font-medium text-sm">
+                        Read Privacy Policy →
+                    </a>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-3">How quickly will I get a response?</h3>
+                    <p class="text-gray-600 text-sm mb-4">
+                        We respond to all inquiries within 24 hours. Emergency support is available 24/7 through our hotline.
+                    </p>
+                    <a href="#" class="text-accent-emerald hover:text-accent-teal font-medium text-sm">
+                        Contact Support →
+                    </a>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-3">Do you offer premium membership?</h3>
+                    <p class="text-gray-600 text-sm mb-4">
+                        Yes, we offer premium membership with exclusive benefits including priority support, advanced resources, and personalized guidance.
+                    </p>
+                    <a href="index.html#pricing" class="text-accent-emerald hover:text-accent-teal font-medium text-sm">
+                        View Pricing →
+                    </a>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-semibold text-primary-dark mb-3">Can I cancel anytime?</h3>
+                    <p class="text-gray-600 text-sm mb-4">
+                        Yes, you can cancel your membership at any time. No questions asked and no hidden fees.
+                    </p>
+                    <a href="refund-policy.html" class="text-accent-emerald hover:text-accent-teal font-medium text-sm">
+                        Read Refund Policy →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-accent-emerald to-accent-teal rounded-lg flex items-center justify-center">
+                            <i data-lucide="heart" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">ReLife</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Your trusted partner for professional life transition support. Empowering individuals to navigate challenges with dignity and strength.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="index.html" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <i data-lucide="home" class="w-4 h-4"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="about.html" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                                <span>About Us</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#features" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <i data-lucide="star" class="w-4 h-4"></i>
+                                <span>Features</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-white transition-colors">Support Groups</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-white transition-colors">One-on-One Counseling</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-white transition-colors">Legal Guidance</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-white transition-colors">Educational Resources</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-white transition-colors">Premium Membership</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Legal & Support -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal & Support</h4>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="privacy-policy.html" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="terms-of-use.html" class="text-gray-300 hover:text-white transition-colors">Terms of Service</a>
+                        </li>
+                        <li>
+                            <a href="disclaimer.html" class="text-gray-300 hover:text-white transition-colors">Disclaimer</a>
+                        </li>
+                        <li>
+                            <a href="refund-policy.html" class="text-gray-300 hover:text-white transition-colors">Refund Policy</a>
+                        </li>
+                        <li>
+                            <a href="sitemap.html" class="text-gray-300 hover:text-white transition-colors">Sitemap</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contact Bar -->
+            <div class="border-t border-gray-700 pt-8 mt-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center md:text-left">
+                        <h5 class="font-semibold mb-2">Stay Connected</h5>
+                        <p class="text-gray-400 text-sm mb-4">Get updates and support resources</p>
+                        <div class="flex justify-center md:justify-start space-x-3">
+                            <input type="email" placeholder="Enter your email" class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-emerald focus:border-transparent">
+                            <button class="bg-accent-emerald hover:bg-accent-teal px-4 py-2 rounded-lg transition-colors font-medium">
+                                Subscribe
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <h5 class="font-semibold mb-2">Need Help?</h5>
+                        <p class="text-gray-400 text-sm mb-4">24/7 Support Available</p>
+                        <a href="#" class="inline-flex items-center space-x-2 text-accent-emerald hover:text-accent-teal transition-colors">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                            <span>+91 9259534648</span>
+                        </a>
+                    </div>
+                    
+                    <div class="text-center md:text-right">
+                        <h5 class="font-semibold mb-2">Download App</h5>
+                        <p class="text-gray-400 text-sm mb-4">Get support on the go</p>
+                        <div class="flex justify-center md:justify-end space-x-3">
+                            <a href="#" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors flex items-center space-x-2">
+                                <i data-lucide="smartphone" class="w-4 h-4"></i>
+                                <span>App Store</span>
+                            </a>
+                            <a href="#" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors flex items-center space-x-2">
+                                <i data-lucide="smartphone" class="w-4 h-4"></i>
+                                <span>Google Play</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-gray-700 pt-8 mt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2026 ReLife Support Platform. All rights reserved. | 
+                    <a href="privacy-policy.html" class="hover:text-accent-emerald transition-colors">Privacy Policy</a> | 
+                    <a href="terms-of-use.html" class="hover:text-accent-emerald transition-colors">Terms of Service</a>
+                </p>
+                <p class="text-gray-500 text-xs mt-2">
+                    Empowering life transitions with professional support and guidance.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+
+        // Handle contact form submission
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                subject: formData.get('subject'),
+                message: formData.get('message')
+            };
+            
+            // Validate form
+            if (!data.firstName || !data.lastName || !data.email || !data.message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Show success message
+            alert('Thank you for contacting ReLife! We will get back to you within 24 hours.');
+            
+            // Reset form
+            event.target.reset();
+        }
+
+        // Start live chat function
+        function startLiveChat() {
+            alert('Live chat feature coming soon! For immediate support, please call +1 (800) CRISIS-HELP');
+        }
+    </script>
+</body>
+</html>

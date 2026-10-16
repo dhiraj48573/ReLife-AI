@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Management - ReLife Admin</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-navy': '#1a365d',
+                        'primary-dark': '#2c5282',
+                        'primary-light': '#e6f3ff',
+                        'accent-emerald': '#10b981',
+                        'accent-teal': '#14b8a6',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-primary-dark shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="admin-dashboard.html" class="text-2xl font-bold text-white">ReLife Admin</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="admin-dashboard.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Dashboard</a>
+                    <a href="session-management.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Sessions</a>
+                    <a href="groups-management.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Groups</a>
+                    <a href="schedule-management.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Schedule</a>
+                    <a href="reports.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Reports</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-primary-dark mb-4">Schedule Management</h1>
+                <p class="text-gray-600 mb-6">Manage session schedules and moderator assignments</p>
+            </div>
+
+            <!-- Schedule Statistics -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                            <i data-lucide="calendar" class="w-6 h-6"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Today's Sessions</p>
+                            <p class="text-2xl font-bold text-gray-900">18</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100 text-green-600">
+                            <i data-lucide="check-circle" class="w-6 h-6"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Completed Today</p>
+                            <p class="text-2xl font-bold text-gray-900">12</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                            <i data-lucide="clock" class="w-6 h-6"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Upcoming</p>
+                            <p class="text-2xl font-bold text-gray-900">6</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Active Moderators</p>
+                            <p class="text-2xl font-bold text-gray-900">8</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar View -->
+            <div class="bg-white shadow rounded-lg mb-8">
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Today's Schedule</h3>
+                        <div class="flex space-x-2">
+                            <button class="bg-accent-emerald text-white px-4 py-2 rounded-lg hover:bg-accent-teal transition-colors">
+                                <i data-lucide="plus" class="w-4 h-4 inline mr-2"></i>
+                                Add Session
+                            </button>
+                            <button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                                <i data-lucide="download" class="w-4 h-4 inline mr-2"></i>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Schedule Timeline -->
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                            <div class="flex-shrink-0">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mt-2"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-900">Women Support Group - Session 1</h4>
+                                        <p class="text-sm text-gray-600">Moderator: Sarah Smith | 15 members</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium text-gray-900">9:00 AM - 10:00 AM</p>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                            <div class="flex-shrink-0">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mt-2"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-900">Men Support Group - Session 2</h4>
+                                        <p class="text-sm text-gray-600">Moderator: Mike Johnson | 12 members</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium text-gray-900">10:30 AM - 11:30 AM</p>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                            <div class="flex-shrink-0">
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full mt-2 animate-pulse"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-900">Premium Session - Emotional Support</h4>
+                                        <p class="text-sm text-gray-600">Moderator: Emily Davis | 8 members</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium text-gray-900">2:00 PM - 3:00 PM</p>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">In Progress</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="flex-shrink-0">
+                                <div class="w-3 h-3 bg-gray-400 rounded-full mt-2"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-900">Child Custody Support Group</h4>
+                                        <p class="text-sm text-gray-600">Moderator: David Wilson | 20 members</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium text-gray-900">4:00 PM - 5:00 PM</p>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Upcoming</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="flex-shrink-0">
+                                <div class="w-3 h-3 bg-gray-400 rounded-full mt-2"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-gray-900">NRI Support Session</h4>
+                                        <p class="text-sm text-gray-600">Moderator: Lisa Anderson | 15 members</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium text-gray-900">5:30 PM - 6:30 PM</p>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Upcoming</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReLife - Professional Support Platform</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ReLife Unified Auth & Role Client -->
+    <script src="authClient.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-navy': '#0f172a',
+                        'primary-dark': '#1e293b',
+                        'primary-light': '#f8fafc',
+                        'accent-emerald': '#059669',
+                        'accent-teal': '#0891b2',
+                        'accent-purple': '#7c3aed',
+                        'accent-rose': '#e11d48',
+                        'neutral-gray': '#475569',
+                        'neutral-light': '#f1f5f9',
+                        'neutral-dark': '#0f172a',
+                        'warm-gray': '#6b7280',
+                        'soft-blue': '#dbeafe',
+                        'soft-purple': '#ede9fe',
+                        'soft-rose': '#fce7f3',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'fade-in': 'fadeIn 1s ease-out',
+                        'bounce-in': 'bounceIn 0.6s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 20px rgba(16, 185, 129, 0.3)' },
+                            '100%': { boxShadow: '0 0 30px rgba(16, 185, 129, 0.6)' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0f172a 70%, #1e293b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(5, 150, 105, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(8, 145, 178, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-3d {
+            transform-style: preserve-3d;
+        }
+        .animate-pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+            100% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.4); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Modern Navigation -->
+    <nav class="bg-primary-dark/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-neutral-gray/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-2">
+                        <img src="Relife logo.png" alt="ReLife Logo" class="w-14 h-14 rounded-lg object-cover">
+                        <h1 class="text-2xl font-bold text-white text-shadow ml-3">ReLife</h1>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="#home" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-1 hover:bg-white/10">
+                        <i data-lucide="home" class="w-4 h-4"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#features" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-1 hover:bg-white/10">
+                        <i data-lucide="star" class="w-4 h-4"></i>
+                        <span>Features</span>
+                    </a>
+                    <a href="about.html" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-1 hover:bg-white/10">
+                        <i data-lucide="users" class="w-4 h-4"></i>
+                        <span>About</span>
+                    </a>
+                    <a href="contact.html" class="nav-link text-white font-medium flex items-center space-x-1">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        <span>Contact</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Auth Buttons -->
+                <div class="hidden md:flex items-center space-x-2">
+                    <div class="relife-auth-slot flex items-center space-x-2">
+                        <button onclick="showLoginModal('user')" class="bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 border border-white/20 hover:border-white/40">
+                            <i data-lucide="log-in" class="w-4 h-4 inline mr-2"></i>
+                            User Login
+                        </button>
+                        <button onclick="showLoginModal('moderator')" class="bg-accent-emerald/20 backdrop-blur-sm text-white hover:bg-accent-emerald/30 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 border border-accent-emerald/30 hover:border-accent-emerald/50">
+                            <i data-lucide="shield" class="w-4 h-4 inline mr-2"></i>
+                            Moderator
+                        </button>
+                        <button onclick="showLoginModal('admin')" class="bg-gradient-to-r from-accent-emerald to-accent-teal text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-300 animate-glow">
+                            <i data-lucide="settings" class="w-4 h-4 inline mr-2"></i>
+                            Admin
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-all duration-300">
+                        <i data-lucide="menu" class="w-6 h-6" id="mobileMenuIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden bg-primary-dark/95 backdrop-blur-md border-t border-white/10 hidden">
+            <div class="px-4 py-4 space-y-2">
+                <a href="#home" onclick="closeMobileMenu()" class="mobile-nav-link block text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-2 hover:bg-white/10">
+                    <i data-lucide="home" class="w-4 h-4"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#features" onclick="closeMobileMenu()" class="mobile-nav-link block text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-2 hover:bg-white/10">
+                    <i data-lucide="star" class="w-4 h-4"></i>
+                    <span>Features</span>
+                </a>
+                <a href="about.html" onclick="closeMobileMenu()" class="mobile-nav-link block text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-2 hover:bg-white/10">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    <span>About</span>
+                </a>
+                <a href="contact.html" onclick="closeMobileMenu()" class="mobile-nav-link block text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center space-x-2 hover:bg-white/10">
+                    <i data-lucide="mail" class="w-4 h-4"></i>
+                    <span>Contact</span>
+                </a>
+                <div class="border-t border-white/10 pt-4 mt-4 space-y-2">
+                    <button onclick="showLoginModal('user'); closeMobileMenu();" class="w-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 border border-white/20 hover:border-white/40">
+                        <i data-lucide="log-in" class="w-4 h-4 inline mr-2"></i>
+                        User Login
+                    </button>
+                    <button onclick="showLoginModal('moderator'); closeMobileMenu();" class="w-full bg-accent-emerald/20 backdrop-blur-sm text-white hover:bg-accent-emerald/30 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 border border-accent-emerald/30 hover:border-accent-emerald/50">
+                        <i data-lucide="shield" class="w-4 h-4 inline mr-2"></i>
+                        Moderator
+                    </button>
+                    <button onclick="showLoginModal('admin'); closeMobileMenu();" class="w-full bg-gradient-to-r from-accent-emerald to-accent-teal text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all duration-300">
+                        <i data-lucide="settings" class="w-4 h-4 inline mr-2"></i>
+                        Admin
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Enhanced Hero Section -->
+    <section id="home" class="hero-gradient min-h-screen flex items-center relative">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="text-white space-y-8 animate-slide-up">
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center animate-float">
+                                <i data-lucide="heart-crack" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-5xl lg:text-6xl font-bold text-shadow">ReLife</h1>
+                                <p class="text-xl text-blue-100 mt-2">Professional Support Platform</p>
+                            </div>
+                        </div>
+
+                        <h2 class="text-3xl lg:text-4xl font-bold leading-tight">
+                            Your <span class="text-yellow-300">Trusted Partner</span> Through Life's
+                            <span class="bg-gradient-to-r from-pink-300 to-purple-300 bg-clip-text text-transparent">Most Challenging</span> Transition
+                        </h2>
+
+                        <p class="text-xl text-blue-100 leading-relaxed">
+                            We understand that sometimes divorce is the only path forward. Our platform provides
+                            <strong class="text-white">compassionate support</strong>,
+                            <strong class="text-white">practical guidance</strong>, and
+                            <strong class="text-white">emotional understanding</strong>
+                            without judgment or pressure for reconciliation.
+                        </p>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="showLoginModal('user')" class="bg-gradient-to-r from-accent-emerald to-accent-teal text-white px-8 py-4 rounded-xl text-lg font-semibold hover:shadow-2xl transition-all duration-300 animate-bounce-in flex items-center justify-center space-x-2 group">
+                            <i data-lucide="log-in" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                            <span>Start Your Journey</span>
+                        </button>
+                        <button onclick="scrollToFeatures()" class="bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 hover:bg-white/20 px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2">
+                            <i data-lucide="arrow-down" class="w-5 h-5 animate-bounce"></i>
+                            <span>Learn More</span>
+                        </button>
+                    </div>
+
+                    <!-- Trust Indicators -->
+                    <div class="flex items-center space-x-6 pt-8 border-t border-white/20">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-green-400"></i>
+                            <span class="text-blue-100">100% Anonymous</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="users" class="w-5 h-5 text-green-400"></i>
+                            <span class="text-blue-100">Expert Moderators</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="lock" class="w-5 h-5 text-green-400"></i>
+                            <span class="text-blue-100">Secure Platform</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content - ReLife Image Centered -->
+                <div class="lg:flex justify-center hidden">
+                    <div class="perspective-1000">
+                        <div class="transform-3d card-hover bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 animate-slide-up" style="animation-delay: 0.3s;">
+                            <div class="text-center space-y-6">
+                                <!-- ReLife Brand Image as Hero Element -->
+                                <div class="mb-8">
+                                    <img src="Relife image.jpeg" alt="ReLife - Divorce Support Platform" class="w-full max-w-xl mx-auto rounded-3xl shadow-2xl animate-slide-up border-4 border-white/20" style="animation-delay: 0.5s;">
+                                </div>
+
+                                
+
+                                <!-- Quote -->
+                                <blockquote class="text-blue-100 italic text-center">
+                                    "Sometimes the bravest thing you can do is walk away from what no longer serves you."
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Elements -->
+        <div class="absolute top-20 right-20 animate-float opacity-20">
+            <i data-lucide="heart" class="w-16 h-16 text-white"></i>
+        </div>
+        <div class="absolute bottom-20 left-20 animate-float opacity-20" style="animation-delay: 2s;">
+            <i data-lucide="star" class="w-20 h-20 text-yellow-300"></i>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Why Choose <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">ReLife</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    We provide comprehensive support tailored to your unique situation with complete confidentiality and expert guidance.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature Cards -->
+                <div class="group card-hover bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 animate-slide-up">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="users" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Expert Moderators</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Our experienced moderators provide guidance and facilitate meaningful conversations in a safe, supportive environment.
+                    </p>
+                    <div class="mt-6 flex items-center text-blue-600 font-semibold">
+                        <span>Learn More</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <div class="group card-hover bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="lock" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Complete Anonymity</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Your privacy is our priority. All sessions and interactions are completely anonymous and confidential.
+                    </p>
+                    <div class="mt-6 flex items-center text-green-600 font-semibold">
+                        <span>Learn More</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <div class="group card-hover bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">24/7 Support</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Access support whenever you need it through our platform and connected meeting sessions.
+                    </p>
+                    <div class="mt-6 flex items-center text-purple-600 font-semibold">
+                        <span>Learn More</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <div class="group card-hover bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-8 animate-slide-up" style="animation-delay: 0.6s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="globe" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Multi-Language Support</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Connect in your preferred language with support groups available in multiple languages.
+                    </p>
+                    <div class="mt-6 flex items-center text-orange-600 font-semibold">
+                        <span>Learn More</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <div class="group card-hover bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-8 animate-slide-up" style="animation-delay: 0.8s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="heart-handshake" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">No Reconciliation Pressure</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        We respect your decision. Our focus is solely on providing support for your divorce journey.
+                    </p>
+                    <div class="mt-6 flex items-center text-red-600 font-semibold">
+                        <span>Learn More</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+
+                <div class="group card-hover bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl p-8 animate-slide-up" style="animation-delay: 1s;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="video" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Premium Sessions</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Access premium one-on-one sessions and specialized group meetings for deeper support.
+                    </p>
+                    <div class="mt-6 flex items-center text-indigo-600 font-semibold">
+                        <span>Learn More</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="animate-bounce-in" style="animation-delay: 0.2s;">
+                    <div class="text-4xl font-bold text-white mb-2 animate-pulse">2,847+</div>
+                    <div class="text-blue-100">Active Users</div>
+                </div>
+                <div class="animate-bounce-in" style="animation-delay: 0.4s;">
+                    <div class="text-4xl font-bold text-white mb-2 animate-pulse">156+</div>
+                    <div class="text-blue-100">Cities Covered</div>
+                </div>
+                <div class="animate-bounce-in" style="animation-delay: 0.6s;">
+                    <div class="text-4xl font-bold text-white mb-2 animate-pulse">23</div>
+                    <div class="text-blue-100">Countries</div>
+                </div>
+                <div class="animate-bounce-in" style="animation-delay: 0.8s;">
+                    <div class="text-4xl font-bold text-white mb-2 animate-pulse">98%</div>
+                    <div class="text-blue-100">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Topics Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 animate-fade-in">Our Support Areas</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    We cover all aspects of the divorce process with specialized support groups for every situation.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Support Topics -->
+                <div class="group bg-white rounded-2xl p-6 card-hover animate-slide-up">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="user-check" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Women's Support</h3>
+                            <p class="text-sm text-gray-600">45 active members</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm">Specialized support for women navigating divorce challenges.</p>
+                </div>
+
+                <div class="group bg-white rounded-2xl p-6 card-hover animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="user" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Men's Support</h3>
+                            <p class="text-sm text-gray-600">32 active members</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm">Dedicated support groups for men going through divorce.</p>
+                </div>
+
+                <div class="group bg-white rounded-2xl p-6 card-hover animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="heart" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Emotional Support</h3>
+                            <p class="text-sm text-gray-600">28 active members</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm">Emotional and mental health support during difficult times.</p>
+                </div>
+
+                <div class="group bg-white rounded-2xl p-6 card-hover animate-slide-up" style="animation-delay: 0.3s;">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="baby" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Child Custody</h3>
+                            <p class="text-sm text-gray-600">38 active members</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm">Support for parents navigating child custody arrangements.</p>
+                </div>
+
+                <div class="group bg-white rounded-2xl p-6 card-hover animate-slide-up" style="animation-delay: 0.4s;">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="globe" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">NRI Section</h3>
+                            <p class="text-sm text-gray-600">15 active members</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm">Specialized support for Non-Resident Indians facing divorce.</p>
+                </div>
+
+                <div class="group bg-white rounded-2xl p-6 card-hover animate-slide-up" style="animation-delay: 0.5s;">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                            <i data-lucide="dollar-sign" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Financial Support</h3>
+                            <p class="text-sm text-gray-600">22 active members</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm">Guidance on alimony, maintenance, and financial planning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+   <!-- Footer -->
+    <footer class="bg-primary-navy border-t border-neutral-gray/20 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <div class="w-8 h-8 bg-gradient-to-br from-primary-navy to-primary-dark rounded-lg flex items-center justify-center">
+                        <i data-lucide="heart" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">ReLife</h3>
+                </div>
+                
+                
+                </div>
+            </div> -->
+        </div>
+    </footer>
+
+    <!-- Enhanced Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 animate-fade-in">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-bounce-in">
+                <div class="p-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-900" id="modalTitle">Login</h3>
+                        <button onclick="closeLoginModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                            <i data-lucide="x" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+
+                    <form id="loginForm" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Mobile Number</label>
+                            <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="Enter your mobile number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" required>
+                        </div>
+
+                        <div id="otpSection" class="hidden">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Enter OTP</label>
+                            <input type="text" id="otp" name="otp" placeholder="Enter 6-digit OTP" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" maxlength="6">
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 animate-glow">
+                            <span id="loginBtnText">Send OTP</span>
+                        </button>
+
+                        <div class="text-center">
+                            <p class="text-sm text-gray-600">
+                                By logging in, you agree to our
+                                <a href="#" class="text-blue-600 hover:text-blue-700">Terms of Service</a>
+                                and
+                                <a href="#" class="text-blue-600 hover:text-blue-700">Privacy Policy</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Navigation Functions
+        let isMobileMenuOpen = false;
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+            
+            isMobileMenuOpen = !isMobileMenuOpen;
+            
+            if (isMobileMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenuIcon.setAttribute('data-lucide', 'menu');
+            }
+            
+            // Re-initialize Lucide icons
+            lucide.createIcons();
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+            
+            mobileMenu.classList.add('hidden');
+            mobileMenuIcon.setAttribute('data-lucide', 'menu');
+            isMobileMenuOpen = false;
+            
+            // Re-initialize Lucide icons
+            lucide.createIcons();
+        }
+
+        // Smooth Scrolling for Navigation Links
+        function initSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offset = 80; // Navigation height offset
+                        const targetPosition = target.offsetTop - offset;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update active state
+                        updateActiveNavLink(this.getAttribute('href'));
+                    }
+                });
+            });
+        }
+
+        // Update Active Navigation Link
+        function updateActiveNavLink(activeHash) {
+            document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+                link.classList.remove('bg-white/20', 'text-white');
+                link.classList.add('text-gray-300');
+            });
+            
+            document.querySelectorAll(`.nav-link[href="${activeHash}"], .mobile-nav-link[href="${activeHash}"]`).forEach(link => {
+                link.classList.remove('text-gray-300');
+                link.classList.add('bg-white/20', 'text-white');
+            });
+        }
+
+        // Scroll-based Active Navigation
+        function updateActiveNavOnScroll() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPosition = window.scrollY + 100;
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    currentSection = '#' + section.getAttribute('id');
+                }
+            });
+            
+            if (currentSection) {
+                updateActiveNavLink(currentSection);
+            }
+        }
+
+        // Navigation Scroll Effect
+        function handleNavScroll() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-2xl', 'bg-primary-dark');
+                nav.classList.remove('bg-primary-dark/95');
+            } else {
+                nav.classList.remove('shadow-2xl', 'bg-primary-dark');
+                nav.classList.add('bg-primary-dark/95');
+            }
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuButton = event.target.closest('button[onclick="toggleMobileMenu()"]');
+            
+            if (isMobileMenuOpen && !mobileMenu.contains(event.target) && !mobileMenuButton) {
+                closeMobileMenu();
+            }
+        });
+
+        // Initialize navigation features
+        document.addEventListener('DOMContentLoaded', function() {
+            initSmoothScrolling();
+            
+            // Update active nav on scroll
+            window.addEventListener('scroll', function() {
+                updateActiveNavOnScroll();
+                handleNavScroll();
+            });
+            
+            // Set initial active state
+            updateActiveNavLink('#home');
+        });
+
+        let currentUserType = 'user';
+
+        function showLoginModal(userType) {
+            currentUserType = userType || 'user';
+            if (window.AuthClient) {
+                window.AuthClient.openModal(userType ? 'personas' : 'otp', userType);
+                return;
+            }
+            const modalTitle = document.getElementById('modalTitle');
+            const titles = {
+                'user': 'User Login - Seeking Support',
+                'moderator': 'Moderator Login',
+                'admin': 'Super Admin Login'
+            };
+            modalTitle.textContent = titles[currentUserType] || 'Login';
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        window.onAuthSuccess = function(session) {
+            const role = (session?.user?.role || session?.user?.userType || currentUserType || 'user').toLowerCase();
+            redirectToDashboard(role);
+        };
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('otpSection').classList.add('hidden');
+            document.getElementById('loginBtnText').textContent = 'Send OTP';
+            document.getElementById('loginForm').reset();
+        }
+
+        function scrollToFeatures() {
+            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function redirectToDashboard(userType) {
+            const dashboards = {
+                'user': 'dashboard.html',
+                'moderator': 'moderator-dashboard.html',
+                'admin': 'admin-dashboard.html'
+            };
+            const targetPage = dashboards[userType] || 'dashboard.html';
+            window.location.href = targetPage;
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const mobileNumber = document.getElementById('mobileNumber').value.trim();
+            const otpSection = document.getElementById('otpSection');
+            const otpField = document.getElementById('otp');
+            const loginBtnText = document.getElementById('loginBtnText');
+
+            if (!otpSection.classList.contains('hidden')) {
+                const otp = otpField.value.trim();
+                if (otp.length === 6) {
+                    loginBtnText.textContent = 'Verifying...';
+                    try {
+                        const res = await fetch('/api/auth/verify-otp', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ mobileNumber, otp })
+                        });
+                        const data = await res.json();
+                        if (res.ok && data.success) {
+                            if (window.AuthClient) {
+                                window.AuthClient.setSession(data.token, data.user);
+                            } else {
+                                localStorage.setItem('authToken', data.token);
+                            }
+                            closeLoginModal();
+                            redirectToDashboard(currentUserType);
+                        } else {
+                            alert(data.message || 'OTP verification failed. Please try again.');
+                            loginBtnText.textContent = 'Verify OTP';
+                        }
+                    } catch (err) {
+                        alert('Network error during verification: ' + err.message);
+                        loginBtnText.textContent = 'Verify OTP';
+                    }
+                } else {
+                    alert('Please enter a valid 6-digit OTP');
+                    otpField.focus();
+                }
+            } else {
+                if (/^[6-9]\d{9}$/.test(mobileNumber)) {
+                    loginBtnText.textContent = 'Sending OTP...';
+                    try {
+                        const res = await fetch('/api/auth/send-otp', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ mobileNumber })
+                        });
+                        const data = await res.json();
+                        if (res.ok && data.success) {
+                            otpSection.classList.remove('hidden');
+                            loginBtnText.textContent = 'Verify OTP';
+                            if (data.demoOtp) {
+                                otpField.value = data.demoOtp;
+                            }
+                            otpField.focus();
+                        } else {
+                            alert(data.message || 'Failed to send OTP. Please check mobile number.');
+                            loginBtnText.textContent = 'Send OTP';
+                        }
+                    } catch (err) {
+                        alert('Network error sending OTP: ' + err.message);
+                        loginBtnText.textContent = 'Send OTP';
+                    }
+                } else {
+                    alert('Please enter a valid 10-digit Indian mobile number');
+                    document.getElementById('mobileNumber').focus();
+                }
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-slide-up, .animate-fade-in, .animate-bounce-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+<!-- Footer Section -->
+
+</html>

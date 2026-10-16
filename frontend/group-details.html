@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Details - ReLife Admin</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-navy': '#1a365d',
+                        'primary-dark': '#2c5282',
+                        'primary-light': '#e6f3ff',
+                        'accent-emerald': '#10b981',
+                        'accent-teal': '#14b8a6',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-primary-dark shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="admin-dashboard.html" class="text-2xl font-bold text-white">ReLife Admin</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="admin-dashboard.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Dashboard</a>
+                    <a href="groups-management.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Groups</a>
+                    <a href="session-management.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Sessions</a>
+                    <a href="schedule-management.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Schedule</a>
+                    <a href="reports.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Reports</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Group Header -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-primary-dark mb-2">Women Support Group A</h1>
+                        <div class="flex items-center space-x-4 text-sm text-gray-600">
+                            <span class="flex items-center">
+                                <i data-lucide="users" class="w-4 h-4 mr-1"></i>
+                                45 Members
+                            </span>
+                            <span class="flex items-center">
+                                <i data-lucide="star" class="w-4 h-4 mr-1"></i>
+                                Premium Group
+                            </span>
+                            <span class="flex items-center">
+                                <i data-lucide="calendar" class="w-4 h-4 mr-1"></i>
+                                Active since Oct 2024
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="bg-accent-emerald text-white px-4 py-2 rounded-lg hover:bg-accent-teal transition-colors">
+                            <i data-lucide="edit" class="w-4 h-4 inline mr-2"></i>
+                            Edit Group
+                        </button>
+                        <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+                            <i data-lucide="trash-2" class="w-4 h-4 inline mr-2"></i>
+                            Delete Group
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Group Statistics -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Total Members</p>
+                            <p class="text-2xl font-bold text-gray-900">45</p>
+                            <p class="text-xs text-green-600">↑ 3 new this week</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100 text-green-600">
+                            <i data-lucide="video" class="w-6 h-6"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Sessions Held</p>
+                            <p class="text-2xl font-bold text-gray-900">28</p>
+                            <p class="text-xs text-gray-500">This month: 8</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                            <i data-lucide="user-check" class="w-6 h-6"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Attendance Rate</p>
+                            <p class="text-2xl font-bold text-gray-900">87%</p>
+                            <p class="text-xs text-green-600">↑ 5% from last month</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                            <i data-lucide="star" class="w-6 h-6"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Avg Rating</p>
+                            <p class="text-2xl font-bold text-gray-900">4.8⭐</p>
+                            <p class="text-xs text-gray-500">From 42 reviews</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Group Information -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <div class="lg:col-span-2">
+                    <div class="bg-white shadow rounded-lg">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-lg font-medium text-gray-900">Group Information</h3>
+                        </div>
+                        <div class="px-6 py-4">
+                            <dl class="grid grid-cols-1 gap-4">
+                                <div class="flex justify-between">
+                                    <dt class="text-sm font-medium text-gray-600">Group Name</dt>
+                                    <dd class="text-sm text-gray-900">Women Support Group A</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-sm font-medium text-gray-600">Topic</dt>
+                                    <dd class="text-sm text-gray-900">Women Support</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-sm font-medium text-gray-600">Type</dt>
+                                    <dd class="text-sm text-gray-900">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">Premium</span>
+                                    </dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-sm font-medium text-gray-600">Moderator</dt>
+                                    <dd class="text-sm text-gray-900">Sarah Smith</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-sm font-medium text-gray-600">Meeting Schedule</dt>
+                                    <dd class="text-sm text-gray-900">Every Monday, 2:00 PM - 3:00 PM</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-sm font-medium text-gray-600">Max Capacity</dt>
+                                    <dd class="text-sm text-gray-900">50 members</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="text-sm font-medium text-gray-600">Status</dt>
+                                    <dd class="text-sm text-gray-900">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="bg-white shadow rounded-lg">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-lg font-medium text-gray-900">Recent Activity</h3>
+                        </div>
+                        <div class="px-6 py-4">
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">New member joined: Priya Sharma</p>
+                                        <p class="text-xs text-gray-500">2 hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">Session completed: 45 attendees</p>
+                                        <p class="text-xs text-gray-500">Yesterday, 2:00 PM</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">Group settings updated</p>
+                                        <p class="text-xs text-gray-500">3 days ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">5-star rating received</p>
+                                        <p class="text-xs text-gray-500">5 days ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Members Table -->
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-medium text-gray-900">Group Members</h3>
+                        <button class="bg-accent-emerald text-white px-4 py-2 rounded-lg hover:bg-accent-teal transition-colors">
+                            <i data-lucide="user-plus" class="w-4 h-4 inline mr-2"></i>
+                            Add Member
+                        </button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mobile</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Join Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Attendance</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Anjali Kumar</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">9876543210</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Oct 15, 2024</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">85%</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-indigo-600 hover:text-indigo-900 mr-3">View</button>
+                                    <button class="text-red-600 hover:text-red-900">Remove</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Priya Sharma</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">9876543211</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Oct 29, 2024</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">New</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-indigo-600 hover:text-indigo-900 mr-3">View</button>
+                                    <button class="text-red-600 hover:text-red-900">Remove</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Meera Patel</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">9876543212</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Oct 10, 2024</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">92%</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-indigo-600 hover:text-indigo-900 mr-3">View</button>
+                                    <button class="text-red-600 hover:text-red-900">Remove</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

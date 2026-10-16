@@ -1,0 +1,27 @@
+{
+  "outputDirectory": "frontend",
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/about", "dest": "/about.html" },
+    { "src": "/contact", "dest": "/contact.html" },
+    { "src": "/contact-seprate", "dest": "/contact-seprate.html" },
+    { "src": "/dashboard", "dest": "/dashboard.html" },
+    { "src": "/journal", "dest": "/journal.html" },
+    { "src": "/support-chat", "dest": "/support-chat.html" },
+    { "src": "/chat", "dest": "/support-chat.html" },
+    { "src": "/admin-dashboard", "dest": "/admin-dashboard.html" },
+    { "src": "/moderator-dashboard", "dest": "/moderator-dashboard.html" },
+    { "src": "/privacy-policy", "dest": "/privacy-policy.html" },
+    { "src": "/terms-of-use", "dest": "/terms-of-use.html" },
+    { "src": "/disclaimer", "dest": "/disclaimer.html" },
+    { "src": "/refund-policy", "dest": "/refund-policy.html" },
+    { "src": "/sitemap", "dest": "/sitemap.html" },
+    { "src": "/compliance", "dest": "/compliance.html" },
+    { "src": "/group-details", "dest": "/group-details.html" },
+    { "src": "/group-management", "dest": "/group-management.html" },
+    { "src": "/groups-management", "dest": "/groups-management.html" },
+    { "src": "/schedule-management", "dest": "/schedule-management.html" },
+    { "src": "/session-management", "dest": "/session-management.html" },
+    { "src": "/reports", "dest": "/reports.html" }
+  ]
+}

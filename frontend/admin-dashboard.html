@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReLife - Super Admin Dashboard</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- ReLife Unified Auth Client -->
+    <script src="authClient.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'divorce-blue': '#2563EB',
+                        'divorce-dark': '#1E40AF',
+                        'divorce-light': '#DBEAFE',
+                        'divorce-pink': '#F472B6',
+                        'divorce-purple': '#8B5CF6',
+                        'divorce-indigo': '#6366F1',
+                        'divorce-cyan': '#06B6D4',
+                        'divorce-teal': '#14B8A6',
+                        'divorce-green': '#10B981',
+                        'divorce-yellow': '#F59E0B',
+                        'divorce-orange': '#F97316',
+                        'divorce-emerald': '#10B981',
+                        'divorce-rose': '#F43F5E',
+                        'divorce-violet': '#7C3AED',
+                        'divorce-fuchsia': '#D946EF',
+                        'divorce-lime': '#65A30D',
+                        'divorce-amber': '#D97706',
+                        'divorce-sky': '#0EA5E9',
+                        'divorce-slate': '#64748B',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-in': 'slideIn 0.5s ease-out',
+                        'bounce-in': 'bounceIn 0.6s ease-out',
+                        'scale-in': 'scaleIn 0.3s ease-out',
+                        'rotate-in': 'rotateIn 0.5s ease-out',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite alternate',
+                        'float': 'float 3s ease-in-out infinite',
+                        'gradient-shift': 'gradientShift 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        rotateIn: {
+                            '0%': { transform: 'rotate(-180deg) scale(0)', opacity: '0' },
+                            '100%': { transform: 'rotate(0deg) scale(1)', opacity: '1' },
+                        },
+                        pulseGlow: {
+                            '0%': { boxShadow: '0 0 5px rgba(139, 92, 246, 0.5)' },
+                            '100%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.8), 0 0 30px rgba(139, 92, 246, 0.4)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        gradientShift: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+        .card-3d:hover {
+            transform: rotateY(5deg) rotateX(5deg) translateZ(20px);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-divorce-dark shadow-lg animate-fade-in">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-2">
+                        <img src="Relife logo.png" alt="ReLife Logo" class="w-14 h-14 rounded-lg object-cover">
+                        <h1 class="text-2xl font-bold text-white text-glow animate-pulse-glow">Admin Dashboard</h1>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relife-auth-slot flex items-center">
+                        <span class="text-white animate-fade-in mr-2">Welcome, Super Admin!</span>
+                        <button onclick="logout()" class="bg-gradient-to-r from-divorce-purple to-divorce-violet text-white px-4 py-2 rounded-lg hover:from-divorce-violet hover:to-divorce-purple transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl font-medium">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Overview -->
+    <section class="py-16 bg-gradient-to-br from-white via-indigo-50 to-white animate-fade-in">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Total Users Card -->
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl shadow-xl p-8 card-3d border-2 border-purple-200 hover:border-purple-400 animate-bounce-in">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold text-purple-800 mb-2">Total Users</h3>
+                            <p class="text-4xl font-bold text-purple-600">1,247</p>
+                            <p class="text-sm text-purple-600 mt-2">Registered users</p>
+                        </div>
+                        <div class="bg-purple-500 rounded-full p-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Moderators Card -->
+                <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl shadow-xl p-8 card-3d border-2 border-indigo-200 hover:border-indigo-400 animate-bounce-in">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold text-indigo-800 mb-2">Active Moderators</h3>
+                            <p class="text-4xl font-bold text-indigo-600">23</p>
+                            <p class="text-sm text-indigo-600 mt-2">Currently online</p>
+                        </div>
+                        <div class="bg-indigo-500 rounded-full p-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Groups Card -->
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl shadow-xl p-8 card-3d border-2 border-blue-200 hover:border-blue-400 animate-bounce-in">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold text-blue-800 mb-2">Active Groups</h3>
+                            <p class="text-4xl font-bold text-blue-600">47</p>
+                            <p class="text-sm text-blue-600 mt-2">Across all topics</p>
+                        </div>
+                        <div class="bg-blue-500 rounded-full p-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Health Card -->
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl shadow-xl p-8 card-3d border-2 border-green-200 hover:border-green-400 animate-bounce-in">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold text-green-800 mb-2">System Health</h3>
+                            <p class="text-4xl font-bold text-green-600">98.5%</p>
+                            <p class="text-sm text-green-600 mt-2">Uptime this month</p>
+                        </div>
+                        <div class="bg-green-500 rounded-full p-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Management Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <!-- User Management -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 animate-slide-in">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="text-purple-600 mr-3">👥</span>
+                        User Management
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-4 bg-purple-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-purple-800">Total Registered Users</h3>
+                                <p class="text-sm text-purple-600">1,247 active users</p>
+                            </div>
+                            <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                                View All
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-indigo-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-indigo-800">Pending Approvals</h3>
+                                <p class="text-sm text-indigo-600">12 moderator requests</p>
+                            </div>
+                            <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                                Review
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-blue-800">Recent Activity</h3>
+                                <p class="text-sm text-blue-600">45 new registrations today</p>
+                            </div>
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Meeting Management -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 animate-slide-in">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="text-indigo-600 mr-3">📹</span>
+                        Meeting Management
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-4 bg-green-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-green-800">Active Meetings</h3>
+                                <p class="text-sm text-green-600">23 meetings in progress</p>
+                            </div>
+                            <button onclick="viewActiveMeetings()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                View Active
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-blue-800">Scheduled Meetings</h3>
+                                <p class="text-sm text-blue-600">47 meetings scheduled</p>
+                            </div>
+                            <button onclick="manageMeetingSchedule()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                Manage Schedule
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-purple-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-purple-800">Meeting Analytics</h3>
+                                <p class="text-sm text-purple-600">Performance metrics & reports</p>
+                            </div>
+                            <button onclick="viewMeetingReports()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                                View Reports
+                            </button>
+                        </div>
+                    </div>
+                <!-- Payment Management -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 animate-slide-in">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="text-yellow-600 mr-3">💳</span>
+                        Payment Management
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-4 bg-green-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-green-800">Premium Subscriptions</h3>
+                                <p class="text-sm text-green-600">1,247 active premium users</p>
+                            </div>
+                            <button onclick="viewSubscribers()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                View Subscribers
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-blue-800">Revenue Analytics</h3>
+                                <p class="text-sm text-blue-600">₹12,47,000 total revenue</p>
+                            </div>
+                            <button onclick="viewRevenueReports()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                View Reports
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-purple-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-purple-800">Payment Processing</h3>
+                                <p class="text-sm text-purple-600">Razorpay integration active</p>
+                            </div>
+                            <button onclick="managePaymentGateway()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                                Manage Gateway
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revenue Analytics with Graph -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 animate-slide-in">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="text-blue-600 mr-3">💰</span>
+                        Revenue Analytics
+                    </h2>
+                    
+                    <!-- Revenue Summary Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-lg border border-green-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-green-600 font-medium">Today's Revenue</p>
+                                    <p class="text-2xl font-bold text-green-800">₹24,500</p>
+                                    <p class="text-xs text-green-600">↑ 12% from yesterday</p>
+                                </div>
+                                <div class="bg-green-100 p-3 rounded-full">
+                                    <i data-lucide="trending-up" class="w-6 h-6 text-green-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-blue-600 font-medium">Weekly Revenue</p>
+                                    <p class="text-2xl font-bold text-blue-800">₹1,89,000</p>
+                                    <p class="text-xs text-blue-600">↑ 8% from last week</p>
+                                </div>
+                                <div class="bg-blue-100 p-3 rounded-full">
+                                    <i data-lucide="calendar" class="w-6 h-6 text-blue-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-purple-600 font-medium">Monthly Revenue</p>
+                                    <p class="text-2xl font-bold text-purple-800">₹8,92,000</p>
+                                    <p class="text-xs text-purple-600">↑ 15% from last month</p>
+                                </div>
+                                <div class="bg-purple-100 p-3 rounded-full">
+                                    <i data-lucide="bar-chart" class="w-6 h-6 text-purple-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border border-yellow-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-yellow-600 font-medium">Avg. Order Value</p>
+                                    <p class="text-2xl font-bold text-yellow-800">₹1,250</p>
+                                    <p class="text-xs text-yellow-600">↑ 5% from last month</p>
+                                </div>
+                                <div class="bg-yellow-100 p-3 rounded-full">
+                                    <i data-lucide="shopping-cart" class="w-6 h-6 text-yellow-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Revenue Chart -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2">
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-lg font-semibold text-gray-800">Revenue Trend</h3>
+                                    <div class="flex space-x-2">
+                                        <button onclick="updateRevenueChart('daily')" class="px-3 py-1 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">Daily</button>
+                                        <button onclick="updateRevenueChart('weekly')" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">Weekly</button>
+                                        <button onclick="updateRevenueChart('monthly')" class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">Monthly</button>
+                                    </div>
+                                </div>
+                                <canvas id="revenueChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">Revenue Sources</h3>
+                                <canvas id="revenueSourcesChart" width="200" height="200"></canvas>
+                                <div class="mt-4 space-y-2">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-600">Premium Subscriptions</span>
+                                        <span class="text-sm font-semibold text-gray-800">68%</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-600">One-on-One Sessions</span>
+                                        <span class="text-sm font-semibold text-gray-800">22%</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-gray-600">Group Sessions</span>
+                                        <span class="text-sm font-semibold text-gray-800">10%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Location Analytics -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 animate-slide-in">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="text-green-600 mr-3">🗺️</span>
+                        Location Analytics
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-blue-800">User Location Tracking</h3>
+                                <p class="text-sm text-blue-600">Track where users access the platform</p>
+                            </div>
+                            <button onclick="showLocationMap()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                View Map
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-green-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-green-800">Geographic Insights</h3>
+                                <p class="text-sm text-green-600">User distribution by region</p>
+                            </div>
+                            <button onclick="showLocationAnalytics()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                View Analytics
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-purple-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-purple-800">Location Trends</h3>
+                                <p class="text-sm text-purple-600">Usage patterns by location</p>
+                            </div>
+                            <button onclick="showLocationTrends()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                                View Trends
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="addModerator()" class="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-6 rounded-xl hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 animate-bounce-in">
+                    <div class="text-center">
+                        <svg class="w-8 h-8 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                        </svg>
+                        <h3 class="font-semibold">Add Moderator</h3>
+                        <p class="text-sm opacity-90 mt-1">Create new moderator</p>
+                    </div>
+                </button>
+
+                <button onclick="manageUsers()" class="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 animate-bounce-in">
+                    <div class="text-center">
+                        <svg class="w-8 h-8 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                        <h3 class="font-semibold">Manage Users</h3>
+                        <p class="text-sm opacity-90 mt-1">User administration</p>
+                    </div>
+                </button>
+
+                <button onclick="manageSystem()" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 animate-bounce-in">
+                    <div class="text-center">
+                        <svg class="w-8 h-8 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <h3 class="font-semibold">System Settings</h3>
+                        <p class="text-sm opacity-90 mt-1">Platform configuration</p>
+                    </div>
+                </button>
+
+                <button onclick="viewRevenueReports()" class="bg-gradient-to-r from-yellow-600 to-orange-700 text-white p-6 rounded-xl hover:from-yellow-700 hover:to-orange-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 animate-bounce-in">
+                    <div class="text-center">
+                        <svg class="w-8 h-8 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <h3 class="font-semibold">Financial Reports</h3>
+                        <p class="text-sm opacity-90 mt-1">Revenue analytics</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function logout() {
+            if (window.AuthClient) {
+                window.AuthClient.logout();
+                return;
+            }
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('token');
+            localStorage.removeItem('relife_token');
+            localStorage.removeItem('relife_user');
+            window.location.href = 'index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.AuthClient && !window.AuthClient.isAuthenticated()) {
+                window.AuthClient.openModal('personas', 'admin');
+            }
+        });
+
+        // Admin Meeting Management Functions
+        function viewActiveMeetings() {
+            alert('📹 Viewing all active meetings...\n\nThis would show a comprehensive list of all ongoing meetings across the platform.');
+        }
+
+        function manageMeetingSchedule() {
+            alert('📅 Managing meeting schedule...\n\nThis would open the meeting scheduling interface for admins.');
+        }
+
+        // Admin Payment Management Functions
+        function viewSubscribers() {
+            alert('👥 Viewing premium subscribers...\n\nThis would show a list of all users who have paid for premium access.');
+        }
+
+        function viewRevenueReports() {
+            alert('📊 Viewing revenue analytics...\n\nThis would show detailed financial reports, conversion rates, and revenue trends.');
+        }
+
+        // Admin Management Functions
+        function addModerator() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.id = 'addModeratorModal';
+
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+                    <div class="text-center mb-6">
+                        <div class="bg-gradient-to-br from-green-100 to-green-200 rounded-full p-6 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                            <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">Add New Moderator</h3>
+                    </div>
+
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                            <input type="text" placeholder="Enter moderator's full name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" placeholder="moderator@example.com" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" placeholder="+1 (555) 123-4567" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Specialization</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <option value="general">General Support</option>
+                                <option value="womens-support">Women's Support</option>
+                                <option value="mens-support">Men's Support</option>
+                                <option value="child-custody">Child Custody</option>
+                                <option value="emotional-support">Emotional Support</option>
+                                <option value="legal-advice">Legal Advice</option>
+                            </select>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button type="button" onclick="closeModal('addModeratorModal')" class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" class="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium">
+                                Add Moderator
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function manageUsers() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.id = 'manageUsersModal';
+
+            const users = window.adminMockData.users;
+            const userStats = {
+                total: users.length,
+                premium: users.filter(u => u.plan === 'premium').length,
+                active: users.filter(u => u.status === 'active').length,
+                new: users.filter(u => new Date(u.joinDate) > new Date(Date.now() - 24 * 60 * 60 * 1000)).length
+            };
+
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-6xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800">👥 User Management</h3>
+                        <button onclick="closeModal('manageUsersModal')" class="text-gray-500 hover:text-gray-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- User Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-blue-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-blue-600">${userStats.total}</div>
+                            <div class="text-sm text-blue-800">Total Users</div>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-green-600">${userStats.premium}</div>
+                            <div class="text-sm text-green-800">Premium Users</div>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-purple-600">${userStats.active}</div>
+                            <div class="text-sm text-purple-800">Active Users</div>
+                        </div>
+                        <div class="bg-orange-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-orange-600">${userStats.new}</div>
+                            <div class="text-sm text-orange-800">New Today</div>
+                        </div>
+                    </div>
+
+                    <!-- User Table -->
+                    <div class="bg-gray-50 rounded-lg overflow-hidden">
+                        <table class="w-full">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">User</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Status</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Plan</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Sessions</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Last Active</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                ${users.map(user => `
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center">
+                                                <div class="bg-${user.plan === 'premium' ? 'purple' : 'blue'}-100 rounded-full p-2 mr-3">
+                                                    <svg class="w-4 h-4 text-${user.plan === 'premium' ? 'purple' : 'blue'}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-gray-900">${user.name}</p>
+                                                    <p class="text-sm text-gray-500">${user.email}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <span class="bg-${user.status === 'active' ? 'green' : 'gray'}-100 text-${user.status === 'active' ? 'green' : 'gray'}-700 px-2 py-1 rounded-full text-xs">
+                                                ${user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <span class="bg-${user.plan === 'premium' ? 'purple' : 'blue'}-100 text-${user.plan === 'premium' ? 'purple' : 'blue'}-700 px-2 py-1 rounded-full text-xs">
+                                                ${user.plan.charAt(0).toUpperCase() + user.plan.slice(1)}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">${user.sessions} sessions</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">${user.lastActive}</td>
+                                        <td class="px-4 py-3">
+                                            <button class="text-blue-600 hover:text-blue-800 text-sm mr-2" onclick="viewUserDetails(${user.id})">View</button>
+                                            <button class="text-${user.status === 'active' ? 'red' : 'green'}-600 hover:text-${user.status === 'active' ? 'red' : 'green'}-800 text-sm" onclick="${user.status === 'active' ? 'suspendUser' : 'activateUser'}(${user.id})">
+                                                ${user.status === 'active' ? 'Suspend' : 'Activate'}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function manageSystem() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.id = 'manageSystemModal';
+
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-4xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800">⚙️ System Management</h3>
+                        <button onclick="closeModal('manageSystemModal')" class="text-gray-500 hover:text-gray-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- System Status -->
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">🖥️ System Status</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Database</span>
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                        <span class="text-sm text-green-600">Online</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Payment Gateway</span>
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                        <span class="text-sm text-green-600">Online</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Chat System</span>
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                        <span class="text-sm text-green-600">Online</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Email Service</span>
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                                        <span class="text-sm text-yellow-600">Warning</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Settings -->
+                        <div class="bg-blue-50 rounded-lg p-6">
+                            <h4 class="text-lg font-semibold text-blue-800 mb-4">🔧 System Settings</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Maintenance Mode</span>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer">
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">New User Registration</span>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked>
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Email Notifications</span>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked>
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function viewUserDetails(userId) {
+            const user = window.adminMockData.users.find(u => u.id === userId);
+            if (!user) return;
+
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.id = 'userDetailsModal';
+
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+                    <div class="text-center mb-6">
+                        <div class="bg-gradient-to-br from-${user.plan === 'premium' ? 'purple' : 'blue'}-100 to-${user.plan === 'premium' ? 'purple' : 'blue'}-200 rounded-full p-6 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                            <svg class="w-12 h-12 text-${user.plan === 'premium' ? 'purple' : 'blue'}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">User Details</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3">👤 Personal Information</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Name:</span>
+                                    <span class="font-medium">${user.name}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Email:</span>
+                                    <span class="font-medium">${user.email}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Phone:</span>
+                                    <span class="font-medium">${user.phone}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Location:</span>
+                                    <span class="font-medium">${user.location}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3">📊 Account Information</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Status:</span>
+                                    <span class="bg-${user.status === 'active' ? 'green' : 'gray'}-100 text-${user.status === 'active' ? 'green' : 'gray'}-700 px-2 py-1 rounded-full text-xs">
+                                        ${user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                                    </span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Plan:</span>
+                                    <span class="bg-${user.plan === 'premium' ? 'purple' : 'blue'}-100 text-${user.plan === 'premium' ? 'purple' : 'blue'}-700 px-2 py-1 rounded-full text-xs">
+                                        ${user.plan.charAt(0).toUpperCase() + user.plan.slice(1)}
+                                    </span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Sessions:</span>
+                                    <span class="font-medium">${user.sessions}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Joined:</span>
+                                    <span class="font-medium">${new Date(user.joinDate).toLocaleDateString()}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Last Active:</span>
+                                    <span class="font-medium">${user.lastActive}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-3 mt-6">
+                        <button onclick="closeModal('userDetailsModal')" class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                            Close
+                        </button>
+                        <button onclick="editUser(${user.id})" class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                            Edit User
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function suspendUser(userId) {
+            if (confirm('Are you sure you want to suspend this user?')) {
+                // In a real app, this would make an API call
+                alert(`User ${userId} has been suspended.`);
+                closeModal('manageUsersModal');
+                setTimeout(() => manageUsers(), 500); // Refresh the modal
+            }
+        }
+
+        function activateUser(userId) {
+            if (confirm('Are you sure you want to activate this user?')) {
+                // In a real app, this would make an API call
+                alert(`User ${userId} has been activated.`);
+                closeModal('manageUsersModal');
+                setTimeout(() => manageUsers(), 500); // Refresh the modal
+            }
+        }
+
+        function editUser(userId) {
+            const user = window.adminMockData.users.find(u => u.id === userId);
+            if (!user) return;
+
+            alert(`Editing user: ${user.name}\n\nThis would open a user edit form with fields for name, email, plan, etc.`);
+        }
+
+        // Location Analytics Functions
+        function showLocationMap() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.id = 'locationMapModal';
+
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-6xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800">🗺️ User Location Map</h3>
+                        <button onclick="closeModal('locationMapModal')" class="text-gray-500 hover:text-gray-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Map Container -->
+                    <div class="bg-gray-100 rounded-lg p-4 mb-6">
+                        <div id="mapContainer" class="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+                            <div class="text-center text-gray-600">
+                                <div class="text-4xl mb-2">🗺️</div>
+                                <p class="text-sm">Google Maps Integration</p>
+                                <p class="text-xs mt-1">User locations would be displayed here</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-blue-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-blue-600">847</div>
+                            <div class="text-sm text-blue-800">Users Tracked</div>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-green-600">156</div>
+                            <div class="text-sm text-green-800">Cities Covered</div>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-purple-600">23</div>
+                            <div class="text-sm text-purple-800">Countries</div>
+                        </div>
+                    </div>
+
+                    <!-- Top Locations -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">📍 Top User Locations</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-red-500 rounded-full mr-3"></div>
+                                        <span class="font-medium">Mumbai, India</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">2,847 users</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
+                                        <span class="font-medium">Delhi, India</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">1,923 users</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                                        <span class="font-medium">Bangalore, India</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">1,456 users</span>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-purple-500 rounded-full mr-3"></div>
+                                        <span class="font-medium">Chennai, India</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">987 users</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-orange-500 rounded-full mr-3"></div>
+                                        <span class="font-medium">Hyderabad, India</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">756 users</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-pink-500 rounded-full mr-3"></div>
+                                        <span class="font-medium">Pune, India</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">623 users</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // Initialize Google Maps (placeholder)
+            setTimeout(() => {
+                initializeMap();
+            }, 100);
+        }
+
+        function showLocationAnalytics() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.id = 'locationAnalyticsModal';
+
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-5xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800">📊 Location Analytics</h3>
+                        <button onclick="closeModal('locationAnalyticsModal')" class="text-gray-500 hover:text-gray-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Analytics Overview -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6">
+                            <h4 class="font-semibold text-blue-800 mb-2">🌍 Geographic Spread</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Countries:</span>
+                                    <span class="font-medium">23</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>States/Provinces:</span>
+                                    <span class="font-medium">156</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Cities:</span>
+                                    <span class="font-medium">847</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6">
+                            <h4 class="font-semibold text-green-800 mb-2">📈 Usage Trends</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Peak Hours:</span>
+                                    <span class="font-medium">2-4 PM</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Peak Days:</span>
+                                    <span class="font-medium">Mon-Thu</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Growth Rate:</span>
+                                    <span class="font-medium text-green-600">+15%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6">
+                            <h4 class="font-semibold text-purple-800 mb-2">👥 User Insights</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Urban Users:</span>
+                                    <span class="font-medium">78%</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Rural Users:</span>
+                                    <span class="font-medium">22%</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Mobile Users:</span>
+                                    <span class="font-medium">92%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Regional Breakdown -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">📍 Regional User Distribution</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-white rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-red-500 rounded-full mr-3"></div>
+                                    <div>
+                                        <p class="font-medium">Maharashtra</p>
+                                        <p class="text-sm text-gray-600">Mumbai, Pune, Nagpur</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-lg">3,247</p>
+                                    <p class="text-sm text-gray-600">users</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-white rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-blue-500 rounded-full mr-3"></div>
+                                    <div>
+                                        <p class="font-medium">Delhi NCR</p>
+                                        <p class="text-sm text-gray-600">Delhi, Gurgaon, Noida</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-lg">2,189</p>
+                                    <p class="text-sm text-gray-600">users</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-white rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-green-500 rounded-full mr-3"></div>
+                                    <div>
+                                        <p class="font-medium">Karnataka</p>
+                                        <p class="text-sm text-gray-600">Bangalore, Mysore</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-lg">1,856</p>
+                                    <p class="text-sm text-gray-600">users</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-white rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-purple-500 rounded-full mr-3"></div>
+                                    <div>
+                                        <p class="font-medium">Tamil Nadu</p>
+                                        <p class="text-sm text-gray-600">Chennai, Coimbatore</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-lg">1,234</p>
+                                    <p class="text-sm text-gray-600">users</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function showLocationTrends() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.id = 'locationTrendsModal';
+
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-5xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800">📈 Location Trends</h3>
+                        <button onclick="closeModal('locationTrendsModal')" class="text-gray-500 hover:text-gray-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Trend Charts -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <h4 class="font-semibold text-gray-800 mb-4">📅 Weekly Activity Trends</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Monday</span>
+                                    <div class="flex items-center">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2 mr-3">
+                                            <div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">85%</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Tuesday</span>
+                                    <div class="flex items-center">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2 mr-3">
+                                            <div class="bg-green-500 h-2 rounded-full" style="width: 92%"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">92%</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Wednesday</span>
+                                    <div class="flex items-center">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2 mr-3">
+                                            <div class="bg-purple-500 h-2 rounded-full" style="width: 88%"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">88%</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Thursday</span>
+                                    <div class="flex items-center">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2 mr-3">
+                                            <div class="bg-orange-500 h-2 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">90%</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Friday</span>
+                                    <div class="flex items-center">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2 mr-3">
+                                            <div class="bg-pink-500 h-2 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">75%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <h4 class="font-semibold text-gray-800 mb-4">🕐 Hourly Activity Patterns</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">9:00 AM</span>
+                                    <div class="flex items-center">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2 mr-3">
+                                            <div class="bg-blue-400 h-2 rounded-full" style="width: 45%"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">45%</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">2:00 PM</span>
+                                    <div class="flex items-center">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2 mr-3">
+                                            <div class="bg-green-500 h-2 rounded-full" style="width: 95%"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">95%</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">7:00 PM</span>
+                                    <div class="flex items-center">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2 mr-3">
+                                            <div class="bg-purple-500 h-2 rounded-full" style="width: 78%"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">78%</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">10:00 PM</span>
+                                    <div class="flex items-center">
+                                        <div class="w-24 bg-gray-200 rounded-full h-2 mr-3">
+                                            <div class="bg-orange-500 h-2 rounded-full" style="width: 35%"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">35%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Growth Trends -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">📈 User Growth by Region</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-white rounded-lg p-4">
+                                <h5 class="font-medium text-gray-800 mb-2">🏙️ Urban Areas</h5>
+                                <p class="text-2xl font-bold text-green-600 mb-1">+18%</p>
+                                <p class="text-sm text-gray-600">Monthly growth</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4">
+                                <h5 class="font-medium text-gray-800 mb-2">🏘️ Suburban Areas</h5>
+                                <p class="text-2xl font-bold text-blue-600 mb-1">+12%</p>
+                                <p class="text-sm text-gray-600">Monthly growth</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4">
+                                <h5 class="font-medium text-gray-800 mb-2">🌾 Rural Areas</h5>
+                                <p class="text-2xl font-bold text-purple-600 mb-1">+8%</p>
+                                <p class="text-sm text-gray-600">Monthly growth</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function initializeMap() {
+            // Placeholder for Google Maps initialization
+            // In a real implementation, this would load the Google Maps API
+            const mapContainer = document.getElementById('mapContainer');
+            if (mapContainer) {
+                mapContainer.innerHTML = `
+                    <div class="w-full h-full bg-gradient-to-br from-blue-50 to-green-50 rounded-lg flex items-center justify-center">
+                        <div class="text-center text-gray-600">
+                            <div class="text-6xl mb-4">🌍</div>
+                            <h3 class="text-lg font-semibold mb-2">Interactive Map</h3>
+                            <p class="text-sm">Google Maps integration would display user locations here</p>
+                            <p class="text-xs mt-2 text-gray-500">Features: Heatmaps, Markers, Clustering</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Mock Data for Admin Dashboard
+        window.adminMockData = {
+            users: [
+                {
+                    id: 1,
+                    name: "Anonymous User",
+                    email: "user123@example.com",
+                    phone: "+91-9876543210",
+                    status: "active",
+                    joinDate: "2024-01-10",
+                    sessions: 5,
+                    location: "Mumbai, Maharashtra",
+                    plan: "basic",
+                    lastActive: "2 hours ago"
+                },
+                {
+                    id: 2,
+                    name: "Anonymous User",
+                    email: "premium.user@example.com",
+                    phone: "+91-8765432109",
+                    status: "active",
+                    joinDate: "2024-01-05",
+                    sessions: 12,
+                    location: "Delhi, NCR",
+                    plan: "premium",
+                    lastActive: "30 minutes ago"
+                },
+                {
+                    id: 3,
+                    name: "Anonymous User",
+                    email: "new.user@example.com",
+                    phone: "+91-7654321098",
+                    status: "active",
+                    joinDate: "2024-01-14",
+                    sessions: 2,
+                    location: "Bangalore, Karnataka",
+                    plan: "basic",
+                    lastActive: "1 hour ago"
+                },
+                {
+                    id: 4,
+                    name: "Anonymous User",
+                    email: "inactive.user@example.com",
+                    phone: "+91-6543210987",
+                    status: "inactive",
+                    joinDate: "2023-12-20",
+                    sessions: 8,
+                    location: "Chennai, Tamil Nadu",
+                    plan: "premium",
+                    lastActive: "3 days ago"
+                }
+            ],
+            moderators: [
+                {
+                    id: 1,
+                    name: "Dr. Sarah Johnson",
+                    email: "sarah.johnson@onlydivorce.com",
+                    specialization: "womens-support",
+                    status: "active",
+                    sessions: 47,
+                    rating: 4.8,
+                    joinDate: "2023-06-15"
+                },
+                {
+                    id: 2,
+                    name: "Mr. Rajesh Kumar",
+                    email: "rajesh.kumar@onlydivorce.com",
+                    specialization: "child-custody",
+                    status: "active",
+                    sessions: 34,
+                    rating: 4.6,
+                    joinDate: "2023-08-22"
+                },
+                {
+                    id: 3,
+                    name: "Ms. Priya Sharma",
+                    email: "priya.sharma@onlydivorce.com",
+                    specialization: "emotional-support",
+                    status: "active",
+                    sessions: 28,
+                    rating: 4.9,
+                    joinDate: "2023-09-10"
+                }
+            ],
+            payments: [
+                {
+                    id: 1,
+                    userId: 2,
+                    amount: 999,
+                    currency: "INR",
+                    status: "completed",
+                    plan: "premium",
+                    date: "2024-01-12",
+                    method: "UPI"
+                },
+                {
+                    id: 2,
+                    userId: 4,
+                    amount: 999,
+                    currency: "INR",
+                    status: "completed",
+                    plan: "premium",
+                    date: "2024-01-08",
+                    method: "Credit Card"
+                },
+                {
+                    id: 3,
+                    userId: 1,
+                    amount: 999,
+                    currency: "INR",
+                    status: "pending",
+                    plan: "premium",
+                    date: "2024-01-15",
+                    method: "Net Banking"
+                }
+            ],
+            locations: [
+                { city: "Mumbai", state: "Maharashtra", country: "India", users: 2847, lat: 19.0760, lng: 72.8777 },
+                { city: "Delhi", state: "NCR", country: "India", users: 1923, lat: 28.7041, lng: 77.1025 },
+                { city: "Bangalore", state: "Karnataka", country: "India", users: 1456, lat: 12.9716, lng: 77.5946 },
+                { city: "Chennai", state: "Tamil Nadu", country: "India", users: 987, lat: 13.0827, lng: 80.2707 },
+                { city: "Hyderabad", state: "Telangana", country: "India", users: 756, lat: 17.3850, lng: 78.4867 },
+                { city: "Pune", state: "Maharashtra", country: "India", users: 623, lat: 18.5204, lng: 73.8567 },
+                { city: "Kolkata", state: "West Bengal", country: "India", users: 445, lat: 22.5726, lng: 88.3639 },
+                { city: "Ahmedabad", state: "Gujarat", country: "India", users: 334, lat: 23.0225, lng: 72.5714 }
+            ]
+        };
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Initialize Revenue Charts
+        initializeRevenueCharts();
+
+        function initializeRevenueCharts() {
+            // Revenue Trend Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            window.revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Revenue (₹)',
+                        data: [22000, 24500, 19800, 26200, 28900, 24500, 21500],
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#2563eb',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#2563eb',
+                            borderWidth: 1,
+                            padding: 12,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Revenue: ₹' + context.parsed.y.toLocaleString('en-IN');
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#6b7280',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            ticks: {
+                                color: '#6b7280',
+                                font: {
+                                    size: 12
+                                },
+                                callback: function(value) {
+                                    return '₹' + (value / 1000) + 'k';
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+
+            // Revenue Sources Chart
+            const sourcesCtx = document.getElementById('revenueSourcesChart').getContext('2d');
+            new Chart(sourcesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Premium Subscriptions', 'One-on-One Sessions', 'Group Sessions'],
+                    datasets: [{
+                        data: [68, 22, 10],
+                        backgroundColor: [
+                            '#2563eb',
+                            '#10b981',
+                            '#f59e0b'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#2563eb',
+                            borderWidth: 1,
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.parsed + '%';
+                                }
+                            }
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        // Update Revenue Chart Function
+        function updateRevenueChart(period) {
+            let labels, data, title;
+            
+            switch(period) {
+                case 'daily':
+                    labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                    data = [22000, 24500, 19800, 26200, 28900, 24500, 21500];
+                    break;
+                case 'weekly':
+                    labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+                    data = [189000, 195000, 201000, 208000];
+                    break;
+                case 'monthly':
+                    labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+                    data = [750000, 820000, 890000, 920000, 950000, 892000];
+                    break;
+            }
+            
+            window.revenueChart.data.labels = labels;
+            window.revenueChart.data.datasets[0].data = data;
+            window.revenueChart.update();
+            
+            // Update button styles
+            document.querySelectorAll('[onclick^="updateRevenueChart"]').forEach(btn => {
+                if (btn.getAttribute('onclick').includes(period)) {
+                    btn.className = 'px-3 py-1 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700';
+                } else {
+                    btn.className = 'px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300';
+                }
+            });
+        }
+
+        // Close modal function
+        function closeModal(modalId = null) {
+            if (modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add('hidden');
+                }
+            } else {
+                // Close all modals if no specific ID is provided
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.classList.add('hidden');
+                });
+            }
+        }
+
+        // Add click event to close modals when clicking outside
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        });
+    </script>
+</body>
+</html>

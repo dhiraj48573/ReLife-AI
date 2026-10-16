@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ReLife Support Platform</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-navy': '#1a365d',
+                        'primary-dark': '#2c5282',
+                        'primary-light': '#e6f3ff',
+                        'accent-emerald': '#10b981',
+                        'accent-teal': '#14b8a6',
+                        'neutral-gray': '#64748b',
+                        'neutral-light': '#f8fafc',
+                        'neutral-dark': '#1e293b',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-in': 'slideIn 0.5s ease-out',
+                        'bounce-in': 'bounceIn 0.6s ease-out',
+                        'scale-in': 'scaleIn 0.3s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'gradient-shift': 'gradientShift 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        gradientShift: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #10b981 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .gradient-border {
+            background: linear-gradient(45deg, #1a365d, #10b981, #14b8a6, #2c5282);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-neutral-light">
+    <!-- Navigation -->
+    <nav class="bg-primary-dark/95 backdrop-blur-md shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-2">
+                        <img src="Relife logo.png" alt="ReLife Logo" class="w-14 h-14 rounded-lg object-cover">
+                        <h1 class="text-2xl font-bold text-white text-shadow ml-3">ReLife</h1>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center space-x-1">
+                        <i data-lucide="home" class="w-4 h-4"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="about.html" class="text-white font-medium flex items-center space-x-1">
+                        <i data-lucide="users" class="w-4 h-4"></i>
+                        <span>About</span>
+                    </a>
+                    <a href="index.html#contact" class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center space-x-1">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        <span>Contact</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.location.href='index.html'" class="bg-accent-emerald text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-accent-teal transition-colors">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-20 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold mb-6 animate-fade-in">About ReLife</h1>
+                <p class="text-xl text-blue-100 max-w-3xl mx-auto animate-slide-in">
+                    Empowering individuals to navigate life's most challenging transitions with dignity, understanding, and expert guidance.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who We Are -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-slide-in">
+                    <h2 class="text-4xl font-bold text-primary-dark mb-6">Who We Are</h2>
+                    <div class="space-y-4 text-gray-600">
+                        <p class="text-lg leading-relaxed">
+                            ReLife is a <strong class="text-accent-emerald">professional support platform</strong> dedicated to helping individuals navigate the complex journey of divorce and life transitions. We are a team of experienced counselors, legal experts, and support specialists committed to providing compassionate guidance during life's most challenging moments.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            Founded on the principle that everyone deserves access to quality support during difficult times, ReLife has become a trusted resource for thousands of individuals seeking to rebuild their lives with confidence and dignity.
+                        </p>
+                        <div class="bg-primary-light p-6 rounded-lg border-l-4 border-accent-emerald">
+                            <p class="text-primary-dark font-medium">
+                                We believe that with the right support system, anyone can transform their challenges into opportunities for growth and new beginnings.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="animate-scale-in">
+                    <div class="relative">
+                        <div class="aspect-square bg-gradient-to-br from-primary-navy to-accent-emerald rounded-2xl flex items-center justify-center">
+                            <div class="text-center text-white p-8">
+                                <i data-lucide="heart-handshake" class="w-24 h-24 mx-auto mb-4"></i>
+                                <h3 class="text-2xl font-bold mb-2">ReLife</h3>
+                                <p class="text-blue-100">Support • Guidance • Transformation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Do -->
+    <section class="py-20 bg-neutral-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-primary-dark mb-4">What We Do</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    We provide comprehensive support services designed to help you navigate every aspect of your journey
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in">
+                    <div class="w-12 h-12 bg-accent-emerald/10 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="users" class="w-6 h-6 text-accent-emerald"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary-dark mb-3">Support Groups</h3>
+                    <p class="text-gray-600">
+                        Safe, confidential spaces where you can connect with others going through similar experiences, facilitated by trained moderators.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in" style="animation-delay: 0.1s">
+                    <div class="w-12 h-12 bg-accent-emerald/10 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="user-check" class="w-6 h-6 text-accent-emerald"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary-dark mb-3">One-on-One Sessions</h3>
+                    <p class="text-gray-600">
+                        Personalized counseling sessions with experienced professionals to address your specific needs and concerns.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in" style="animation-delay: 0.2s">
+                    <div class="w-12 h-12 bg-accent-emerald/10 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="book-open" class="w-6 h-6 text-accent-emerald"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary-dark mb-3">Educational Resources</h3>
+                    <p class="text-gray-600">
+                        Comprehensive guides, articles, and tools to help you understand your options and make informed decisions.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in" style="animation-delay: 0.3s">
+                    <div class="w-12 h-12 bg-accent-emerald/10 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-accent-emerald"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary-dark mb-3">Legal Guidance</h3>
+                    <p class="text-gray-600">
+                        Access to legal experts who can help you understand your rights and navigate the legal aspects of your situation.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in" style="animation-delay: 0.4s">
+                    <div class="w-12 h-12 bg-accent-emerald/10 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="heart" class="w-6 h-6 text-accent-emerald"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary-dark mb-3">Emotional Support</h3>
+                    <p class="text-gray-600">
+                        Professional counseling and emotional support to help you process your feelings and build resilience.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fade-in" style="animation-delay: 0.5s">
+                    <div class="w-12 h-12 bg-accent-emerald/10 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="target" class="w-6 h-6 text-accent-emerald"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary-dark mb-3">Future Planning</h3>
+                    <p class="text-gray-600">
+                        Guidance and resources to help you plan for your future and build the life you want after transition.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Trust Us -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-primary-dark mb-4">Why Trust ReLife</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Your trust is our foundation. Here's what makes us a reliable partner in your journey
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="award" class="w-6 h-6 text-green-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-primary-dark mb-2">Professional Expertise</h3>
+                            <p class="text-gray-600">
+                                Our team includes certified counselors, legal experts, and experienced moderators with years of experience in family law and emotional support.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="lock" class="w-6 h-6 text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-primary-dark mb-2">Complete Confidentiality</h3>
+                            <p class="text-gray-600">
+                                Your privacy is paramount. All sessions and communications are encrypted and completely confidential, following industry best practices.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="users-2" class="w-6 h-6 text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-primary-dark mb-2">Proven Track Record</h3>
+                            <p class="text-gray-600">
+                                We've helped thousands of individuals successfully navigate their transitions with a 95% satisfaction rate and countless positive testimonials.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="star" class="w-6 h-6 text-yellow-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-primary-dark mb-2">24/7 Support</h3>
+                            <p class="text-gray-600">
+                                Our platform is available whenever you need support, with emergency resources and crisis intervention available around the clock.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-primary-light to-white p-8 rounded-2xl">
+                    <div class="text-center mb-6">
+                        <div class="w-20 h-20 bg-accent-emerald rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="check-circle" class="w-10 h-10 text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary-dark mb-2">Certified & Accredited</h3>
+                        <p class="text-gray-600">We maintain the highest standards of professional practice</p>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                            <span class="text-gray-700">Licensed Professional Counselors</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                            <span class="text-gray-700">Legal Expert Partners</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                            <span class="text-gray-700">HIPAA Compliant Platform</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                            <span class="text-gray-700">Industry Best Practices</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-green-500"></i>
+                            <span class="text-gray-700">Regular Quality Audits</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="py-20 bg-neutral-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="w-16 h-16 bg-accent-emerald rounded-full flex items-center justify-center mb-6">
+                        <i data-lucide="target" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-primary-dark mb-4">Our Mission</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        To provide compassionate, professional, and accessible support that empowers individuals to navigate life transitions with dignity, strength, and hope. We strive to create a safe space where everyone can find the guidance they need to rebuild and thrive.
+                    </p>
+                    <div class="mt-6 pt-6 border-t border-gray-200">
+                        <div class="flex items-center space-x-2 text-accent-emerald">
+                            <i data-lucide="heart" class="w-5 h-5"></i>
+                            <span class="font-medium">Compassion First</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="w-16 h-16 bg-primary-navy rounded-full flex items-center justify-center mb-6">
+                        <i data-lucide="eye" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-primary-dark mb-4">Our Vision</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        To become the world's most trusted platform for life transition support, where everyone facing challenging life changes can find the resources, community, and professional guidance they need to transform their challenges into opportunities for growth.
+                    </p>
+                    <div class="mt-6 pt-6 border-t border-gray-200">
+                        <div class="flex items-center space-x-2 text-primary-navy">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                            <span class="font-medium">Transforming Lives</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Team -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-primary-dark mb-4">Our Leadership Team</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Meet the passionate experts dedicated to supporting you through every step of your journey
+                </p>
+            </div>
+            
+            <!-- CEO Featured Section -->
+            <div class="mb-16">
+                <div class="bg-gradient-to-br from-accent-emerald/10 to-accent-teal/10 rounded-3xl p-8 border border-accent-emerald/20">
+                    <div class="flex flex-col lg:flex-row items-center gap-8">
+                        <div class="flex-shrink-0">
+                            <div class="relative group">
+                                <div class="w-40 h-40 bg-gradient-to-br from-accent-emerald to-accent-teal rounded-full flex items-center justify-center shadow-xl overflow-hidden">
+                                    <img src="Photo-dhiru.jpg" alt="Dhiraj Kumar - CEO" class="w-full h-full object-cover rounded-full">
+                                </div>
+                                <div class="absolute -inset-2 w-40 h-40 bg-gradient-to-br from-accent-emerald to-accent-teal rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300 scale-110"></div>
+                                <div class="absolute -bottom-2 -right-2 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold">
+                                    CEO
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1 text-center lg:text-left">
+                            <h3 class="text-3xl font-bold text-primary-dark mb-2">Dhiraj Kumar</h3>
+                            <div class="flex items-center justify-center lg:justify-start space-x-2 mb-4">
+                                <span class="bg-accent-emerald text-white px-3 py-1 rounded-full text-sm font-medium">Founder & CEO</span>
+                                <!-- <span class="bg-primary-navy text-white px-3 py-1 rounded-full text-sm font-medium">Clinical Psychologist</span> -->
+                            </div>
+                            <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                               Dhiraj Kumar is a software engineer and B.Tech Computer Science student specializing in AI and Machine Learning. With hands-on experience in building intelligent, real-world applications using React, Node.js, and Python, he focuses on creating scalable and impactful digital solutions.
+
+As the founder of ReLife, his vision is to leverage technology to provide accessible, user-centric support systems that empower individuals during life transitions.
+                            </p>
+                            <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+                                <div class="flex items-center space-x-2 text-sm text-gray-600">
+                                    <i data-lucide="award" class="w-4 h-4 text-accent-emerald"></i>
+                                    <!-- <span>Ph.D. Clinical Psychology</span> -->
+                                </div>
+                                <div class="flex items-center space-x-2 text-sm text-gray-600">
+                                    <i data-lucide="briefcase" class="w-4 h-4 text-accent-emerald"></i>
+                                    <!-- <span>15+ Years Experience</span> -->
+                                </div>
+                                <div class="flex items-center space-x-2 text-sm text-gray-600">
+                                    <i data-lucide="users" class="w-4 h-4 text-accent-emerald"></i>
+                                    <!-- <span>10,000+ Lives Impacted</span> -->
+                                </div>
+                            </div>
+                            <div class="mt-6 pt-6 border-t border-gray-200">
+                                <h4 class="font-semibold text-primary-dark mb-3">Leadership Philosophy</h4>
+                                <p class="text-gray-600 italic">
+                                    "Every person deserves compassionate, professional support during life's most challenging transitions. Our mission is to transform the narrative around divorce from one of failure to one of courage, growth, and new beginnings."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Other Team Members -->
+            <!-- <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="text-center group">
+                    <div class="relative mb-6">
+                        <div class="w-32 h-32 bg-gradient-to-br from-accent-emerald to-accent-teal rounded-full mx-auto flex items-center justify-center">
+                            <span class="text-3xl font-bold text-white">JD</span>
+                        </div>
+                        <div class="absolute inset-0 w-32 h-32 bg-gradient-to-br from-accent-emerald to-accent-teal rounded-full mx-auto opacity-0 group-hover:opacity-20 transition-opacity duration-300 scale-110"></div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary-dark mb-2">Dhiraj Kumar</h3>
+                    <p class="text-accent-emerald font-medium mb-3">Founder & CEO</p>
+                    
+                    <div class="flex justify-center space-x-3">
+                        <i data-lucide="linkedin" class="w-5 h-5 text-gray-400 hover:text-accent-emerald cursor-pointer transition-colors"></i>
+                        <i data-lucide="twitter" class="w-5 h-5 text-gray-400 hover:text-accent-emerald cursor-pointer transition-colors"></i>
+                        <i data-lucide="mail" class="w-5 h-5 text-gray-400 hover:text-accent-emerald cursor-pointer transition-colors"></i>
+                    </div>
+                </div>
+                
+                <div class="text-center group">
+                    <div class="relative mb-6">
+                        <div class="w-32 h-32 bg-gradient-to-br from-primary-navy to-primary-dark rounded-full mx-auto flex items-center justify-center">
+                            <span class="text-3xl font-bold text-white">MC</span>
+                        </div>
+                        <div class="absolute inset-0 w-32 h-32 bg-gradient-to-br from-primary-navy to-primary-dark rounded-full mx-auto opacity-0 group-hover:opacity-20 transition-opacity duration-300 scale-110"></div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary-dark mb-2">Niraj Kumar</h3>
+                    <p class="text-primary-navy font-medium mb-3">Chief Technology Officer</p>
+                    <p class="text-gray-600 text-sm mb-4">
+                        Tech expert passionate about creating secure, user-friendly platforms for mental health support.
+                    </p>
+                    <div class="flex justify-center space-x-3">
+                        <i data-lucide="linkedin" class="w-5 h-5 text-gray-400 hover:text-primary-navy cursor-pointer transition-colors"></i>
+                        <i data-lucide="twitter" class="w-5 h-5 text-gray-400 hover:text-primary-navy cursor-pointer transition-colors"></i>
+                        <i data-lucide="mail" class="w-5 h-5 text-gray-400 hover:text-primary-navy cursor-pointer transition-colors"></i>
+                    </div>
+                </div>
+                
+                <div class="text-center group">
+                    <div class="relative mb-6">
+                        <div class="w-32 h-32 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full mx-auto flex items-center justify-center">
+                            <span class="text-3xl font-bold text-white">SR</span>
+                        </div>
+                        <div class="absolute inset-0 w-32 h-32 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full mx-auto opacity-0 group-hover:opacity-20 transition-opacity duration-300 scale-110"></div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-primary-dark mb-2">Aman</h3>
+                    <p class="text-yellow-600 font-medium mb-3">Head of Counseling Services</p>
+                    <p class="text-gray-600 text-sm mb-4">
+                        Licensed Marriage and Family Therapist specializing in divorce recovery and life transitions.
+                    </p>
+                    <div class="flex justify-center space-x-3">
+                        <i data-lucide="linkedin" class="w-5 h-5 text-gray-400 hover:text-yellow-600 cursor-pointer transition-colors"></i>
+                        <i data-lucide="twitter" class="w-5 h-5 text-gray-400 hover:text-yellow-600 cursor-pointer transition-colors"></i>
+                        <i data-lucide="mail" class="w-5 h-5 text-gray-400 hover:text-yellow-600 cursor-pointer transition-colors"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-gray-600 mb-6">And 25+ dedicated support specialists, counselors, and moderators</p>
+                <button class="bg-accent-emerald text-white px-6 py-3 rounded-lg hover:bg-accent-teal transition-colors">
+                    Meet the Full Team
+                </button>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Our Story -->
+    <section class="py-20 bg-neutral-light">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-primary-dark mb-4">Our Story</h2>
+                <p class="text-xl text-gray-600">
+                    How ReLife began and the journey that brought us here
+                </p>
+            </div>
+            
+            <div class="space-y-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-accent-emerald rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold">2021</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-primary-dark mb-2">The Beginning</h3>
+                            <p class="text-gray-600">
+                                ReLife was born from Dhiraj Kumar experience as a family therapist. She saw countless individuals struggling to find affordable, accessible support during divorce and life transitions. The idea was simple: create a platform that combines professional expertise with the power of community support.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-primary-navy rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold">2023</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-primary-dark mb-2">Building the Platform</h3>
+                            <p class="text-gray-600">
+                                Joined by technology , the team began developing a secure, user-friendly platform that could connect people with the support they need. The focus was on creating a safe, confidential space where individuals could find both professional guidance and peer support.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold">2025</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-primary-dark mb-2">Growing Impact</h3>
+                            <p class="text-gray-600">
+                                With Niraj Kumar leading counseling services, ReLife expanded to serve thousands of users across the country. We developed comprehensive support programs, partnered with legal experts, and built a community of trained moderators dedicated to helping others.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-accent-teal rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold">Today</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-primary-dark mb-2">Making a Difference</h3>
+                            <p class="text-gray-600">
+                                Today, ReLife is a trusted platform that has helped over 10,000 individuals navigate their life transitions. We continue to innovate and expand our services, always staying true to our mission of providing compassionate, professional support to those who need it most.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <div class="bg-gradient-to-r from-accent-emerald to-accent-teal p-8 rounded-2xl text-white">
+                    <h3 class="text-2xl font-bold mb-4">Join Our Journey</h3>
+                    <p class="text-blue-100 mb-6">
+                        Whether you're seeking support or want to help others, ReLife welcomes you to be part of our community.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="window.location.href='index.html'" class="bg-white text-accent-emerald px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors font-medium">
+                            Get Support
+                        </button>
+                        <button class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-lg hover:bg-white/30 transition-colors font-medium">
+                            Join Our Team
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Footer -->
+    <footer class="bg-neutral-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-accent-emerald to-accent-teal rounded-lg flex items-center justify-center">
+                            <i data-lucide="heart" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">ReLife</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Your trusted partner for professional life transition support. Empowering individuals to navigate challenges with dignity and strength.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="index.html" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <i data-lucide="home" class="w-4 h-4"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="about.html" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                                <span>About Us</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#features" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <i data-lucide="star" class="w-4 h-4"></i>
+                                <span>Features</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#contact" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <i data-lucide="mail" class="w-4 h-4"></i>
+                                <span>Contact</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-white transition-colors">Support Groups</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-white transition-colors">One-on-One Counseling</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-white transition-colors">Legal Guidance</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-white transition-colors">Educational Resources</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-white transition-colors">Premium Membership</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Legal & Support -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal & Support</h4>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="privacy-policy.html" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="terms-of-use.html" class="text-gray-300 hover:text-white transition-colors">Terms of Service</a>
+                        </li>
+                        <li>
+                            <a href="disclaimer.html" class="text-gray-300 hover:text-white transition-colors">Disclaimer</a>
+                        </li>
+                        <li>
+                            <a href="refund-policy.html" class="text-gray-300 hover:text-white transition-colors">Refund Policy</a>
+                        </li>
+                        <li>
+                            <a href="sitemap.html" class="text-gray-300 hover:text-white transition-colors">Sitemap</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contact Bar -->
+            <div class="border-t border-gray-700 pt-8 mt-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center md:text-left">
+                        <h5 class="font-semibold mb-2">Stay Connected</h5>
+                        <p class="text-gray-400 text-sm mb-4">Get updates and support resources</p>
+                        <div class="flex justify-center md:justify-start space-x-3">
+                            <input type="email" placeholder="Enter your email" class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-emerald focus:border-transparent">
+                            <button class="bg-accent-emerald hover:bg-accent-teal px-4 py-2 rounded-lg transition-colors font-medium">
+                                Subscribe
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <h5 class="font-semibold mb-2">Need Help?</h5>
+                        <p class="text-gray-400 text-sm mb-4">24/7 Support Available</p>
+                        <a href="#" class="inline-flex items-center space-x-2 text-accent-emerald hover:text-accent-teal transition-colors">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                            <span>+91 Dhiraj Kumar</span>
+                        </a>
+                    </div>
+                    
+                    <div class="text-center md:text-right">
+                        <!-- <h5 class="font-semibold mb-2">Download App</h5> -->
+                        <!-- <p class="text-gray-400 text-sm mb-4">Get support on the go</p> -->
+                        <div class="flex justify-center md:justify-end space-x-3">
+                            <a href="#" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors flex items-center space-x-2">
+                                <i data-lucide="smartphone" class="w-4 h-4"></i>
+                                <!-- <span>App Store</span> -->
+                            </a>
+                            <a href="#" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors flex items-center space-x-2">
+                                <i data-lucide="smartphone" class="w-4 h-4"></i>
+                                <!-- <span>Google Play</span> -->
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-gray-700 pt-8 mt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2026 ReLife Support Platform. All rights reserved. | 
+                    <a href="privacy-policy.html" class="hover:text-accent-emerald transition-colors">Privacy Policy</a> | 
+                    <a href="terms-of-use.html" class="hover:text-accent-emerald transition-colors">Terms of Service</a>
+                </p>
+                <p class="text-gray-500 text-xs mt-2">
+                    Empowering life transitions with professional support and guidance.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
