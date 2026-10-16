@@ -5,6 +5,8 @@ const connectDB = async () => {
     const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/onlydivorce', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      tlsAllowInvalidCertificates: true,
+
     });
 
     console.log(`🍃 MongoDB Connected: ${conn.connection.host}`);
@@ -26,8 +28,9 @@ const connectDB = async () => {
 
   } catch (error) {
     console.error('Error connecting to MongoDB:', error.message);
-    process.exit(1);
+    // Continue without exiting so in‑memory mock users can be used
   }
+
 };
 
 module.exports = connectDB;

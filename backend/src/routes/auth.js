@@ -14,6 +14,23 @@ const router = express.Router();
 // In-memory user store for offline / mock testing
 const testMemoryUsers = new Map();
 
+// Prepopulate mock users for offline testing (demo credentials)
+if (process.env.NODE_ENV !== 'production') {
+  const demoUsers = [
+    { email: 'member@example.com', password: 'member123', role: 'user' },
+    { email: 'moderator@example.com', password: 'mod12345', role: 'moderator' },
+    { email: 'admin@example.com', password: 'admin12345', role: 'admin' }
+  ];
+  (async () => {
+    for (const du of demoUsers) {
+      const salt = await bcrypt.genSalt(10);
+      const hashed = await bcrypt.hash(du.password, salt);
+      const mockId = new mongoose.Types.ObjectId().toString();
+      testMemoryUsers.set(du.email, { ...du, password: hashed, _id: mockId, id: mockId });
+    }
+  })();
+}
+
 // Generate JWT token
 const generateToken = (userId, userType) => {
   return jwt.sign(

@@ -135,10 +135,17 @@ async function processSupportMessage({
   const ragResult = retrieve(trimmedMessage, { topK: 2, minScore: 2.0 });
 
   // 6. Fetch Recent History for Context
-  const existingHistory = await ChatHistory.findOne(
-    { sessionId: activeSessionId, userId },
-    { messages: { $slice: -6 } }
-  ).lean();
+  let existingHistory = null;
+  if (require('mongoose').connection.readyState === 1) {
+    try {
+      existingHistory = await ChatHistory.findOne(
+        { sessionId: activeSessionId, userId },
+        { messages: { $slice: -6 } }
+      ).lean();
+    } catch (dbErr) {
+      console.warn('[SupportAssistant] Unable to fetch chat history:', dbErr.message);
+    }
+  }
   const recentHistory = existingHistory?.messages || [];
 
   // 7. Prompt Assembly with Untrusted Data Boundaries
@@ -227,11 +234,17 @@ async function recordExchange({
     }
   };
 
-  await ChatHistory.findOneAndUpdate(
-    { sessionId },
-    update,
-    { upsert: true, new: true }
-  );
+  if (require('mongoose').connection.readyState === 1) {
+    try {
+      await ChatHistory.findOneAndUpdate(
+        { sessionId },
+        update,
+        { upsert: true, new: true }
+      );
+    } catch (dbErr) {
+      console.warn('[SupportAssistant] Unable to record chat exchange:', dbErr.message);
+    }
+  }
 }
 
 /**

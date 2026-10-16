@@ -14,7 +14,9 @@
     const TOKEN_KEYS = ['authToken', 'token', 'relife_token'];
     const USER_KEY = 'relife_user';
 
-    const AuthClient = {
+    const API_BASE = 'http://localhost:5005';
+
+const AuthClient = {
         getToken() {
             for (const key of TOKEN_KEYS) {
                 const val = localStorage.getItem(key);
@@ -139,7 +141,7 @@
             if (feedbackEl) feedbackEl.innerHTML = '<span class="text-blue-600 font-medium">Signing in...</span>';
 
             try {
-                const res = await fetch('/api/auth/login', {
+                const res = await fetch(`${API_BASE}/api/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ identifier, password })
@@ -186,7 +188,7 @@
             const lastName = nameParts.slice(1).join(' ') || '';
 
             try {
-                const res = await fetch('/api/auth/register', {
+                const res = await fetch(`${API_BASE}/api/auth/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password, firstName, lastName, userType })
@@ -223,7 +225,7 @@
             if (feedbackEl) feedbackEl.innerHTML = '<span class="text-blue-600 font-medium">Signing in...</span>';
 
             try {
-                const res = await fetch('/api/auth/demo-login', {
+                const res = await fetch(`${API_BASE}/api/auth/demo-login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ role })
@@ -262,7 +264,7 @@
             if (feedbackEl) feedbackEl.innerHTML = '<span class="text-blue-600">Sending OTP...</span>';
 
             try {
-                const res = await fetch('/api/auth/send-otp', {
+                const res = await fetch(`${API_BASE}/api/auth/send-otp`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ mobileNumber })
@@ -315,7 +317,7 @@
             if (feedbackEl) feedbackEl.innerHTML = '<span class="text-blue-600">Verifying code...</span>';
 
             try {
-                const res = await fetch('/api/auth/verify-otp', {
+                const res = await fetch(`${API_BASE}/api/auth/verify-otp`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ mobileNumber, otp })
@@ -646,7 +648,7 @@
             const token = this.getToken();
             if (!token) return null;
             try {
-                const res = await fetch('/api/auth/me', {
+                const res = await fetch(`${API_BASE}/api/auth/me`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (res.ok) {
